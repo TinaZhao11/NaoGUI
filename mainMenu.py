@@ -1,10 +1,13 @@
+'''This GUI project is created by Zeyu Zhao
+This mainMenu is a part of GUI  project, aim to show the GUI'''
+
 #!/usr/bin/python
 
 # Draw the mainMenu for the Naopy App
-
 import sys
 from PyQt4 import QtGui, QtCore
 import animation_view
+
 
 
 class MainMenu(QtGui.QWidget):
@@ -12,10 +15,11 @@ class MainMenu(QtGui.QWidget):
         super(MainMenu, self).__init__()
         self.Animation = animation_view.Animation_View()
 
+
     def setMainWindow(self):
         #Draw the main windows
         self.resize(1000, 600)
-        self.setCenter()
+        self.Animation.setCenter()
         self.setWindowTitle('Naopy')
         self.setWindowIcon(QtGui.QIcon('image/Icon.png'))
 
@@ -41,15 +45,14 @@ class MainMenu(QtGui.QWidget):
         #self.button2.clicked.connect(self.button2_clicked)
         #self.button3.clicked.connect(self.button3_clicked)
     # Set the window into Center
-    def setCenter(self):
+    '''def setCenter(self):
         screen = QtGui.QDesktopWidget().screenGeometry()
         size = self.geometry()
-        self.move((screen.width() - size.width()) / 2, (screen.height() - size.height()) / 2)
+        self.move((screen.width() - size.width()) / 2, (screen.height() - size.height()) / 2)'''
 
     def button1_clicked(self):
         #self.hide()
         #Form1 = QtGui.QDialog()
-
         self.Animation.show()
         print("button1_clicked")
 
