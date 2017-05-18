@@ -5,8 +5,13 @@ This mainMenu is a part of GUI  project, aim to show the GUI'''
 
 # Draw the mainMenu for the Naopy App
 import sys
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtGui
+from PyQt4.QtGui import QPalette,QPixmap,QFont,QMainWindow,QLabel,QApplication
+from PyQt4.QtGui import QPixmap
+
 import animation_view
+import Controller as con
+import frameLayout as fL
 
 
 
@@ -19,40 +24,47 @@ class MainMenu(QtGui.QWidget):
     def setMainWindow(self):
         #Draw the main windows
         self.resize(1000, 600)
-        self.Animation.setCenter()
         self.setWindowTitle('Naopy')
         self.setWindowIcon(QtGui.QIcon('image/Icon.png'))
 
+        mainBG_image = QtGui.QPixmap()
+        mainBG_image.load('image/mainBG.png')
+        mainBG = QtGui.QPalette()
+        mainBG.setBrush(self.backgroundRole(), QtGui.QBrush(mainBG_image))
+        self.setPalette(mainBG)
+        self.setAutoFillBackground(True)
+
+
         #Draw the button for the mainMenu
         self.button1 = QtGui.QPushButton("Animation", self)
-        self.button1.resize(150, 80)
-        self.button1.move(200, 50)
+        self.button1.resize(180, 80)
+        self.button1.move(200, 60)
+        self.button1.setFont(QFont("Consolas",20))
 
         self.button2 = QtGui.QPushButton("Audio", self)
-        self.button2.resize(150, 80)
-        self.button2.move(200, 200)
+        self.button2.resize(180, 80)
+        self.button2.move(200, 190)
+        self.button2.setFont(QFont("Consolas", 20))
 
         self.button3 = QtGui.QPushButton("Suprise", self)
-        self.button3.resize(150, 80)
-        self.button3.move(200, 350)
+        self.button3.resize(180, 80)
+        self.button3.move(200, 320)
+        self.button3.setFont(QFont("Consolas", 20))
 
         self.button4 = QtGui.QPushButton("Exit", self)
-        self.button4.resize(150, 80)
-        self.button4.move(200, 500)
+        self.button4.resize(180, 80)
+        self.button4.move(200, 450)
+        self.button4.setFont(QFont("Consolas", 20))
 
         self.button1.clicked.connect(self.button1_clicked)
         self.button4.clicked.connect(self.button4_clicked)
         #self.button2.clicked.connect(self.button2_clicked)
         #self.button3.clicked.connect(self.button3_clicked)
     # Set the window into Center
-    '''def setCenter(self):
-        screen = QtGui.QDesktopWidget().screenGeometry()
-        size = self.geometry()
-        self.move((screen.width() - size.width()) / 2, (screen.height() - size.height()) / 2)'''
 
     def button1_clicked(self):
-        #self.hide()
-        #Form1 = QtGui.QDialog()
+        # self.hide()
+        # Form1 = QtGui.QDialog()
         self.Animation.show()
         print("button1_clicked")
 
