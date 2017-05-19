@@ -15,7 +15,7 @@ class Audio_View(QtGui.QWidget):
         self.tabWidget1 = QtGui.QTabWidget()
         self.tabWidget2 = QtGui.QTabWidget()
         self.textEdit = QtGui.QTextEdit()
-        self.vSlider = QtGui.QSlider()
+        self.volSlider = QtGui.QSlider()
         self.musicList = QtGui.QComboBox()
 
     def initUI(self):
@@ -29,6 +29,15 @@ class Audio_View(QtGui.QWidget):
         audioBG.setBrush(self.backgroundRole(), QtGui.QBrush(audioBG_image))
         self.setPalette(audioBG)
         self.setAutoFillBackground(True)
+
+        volume_label = QtGui.QLabel(self)
+        volume_label.setPixmap(QtGui.QPixmap('image/volume.png'))
+        volume_label.move(70, 50)
+
+        Audio_View.volSlider = QtGui.QSlider(self)
+        Audio_View.volSlider.setGeometry(QtCore.QRect(130, 50, 210, 30))
+        Audio_View.volSlider.setOrientation(QtCore.Qt.Horizontal)
+        Audio_View.volSlider.setRange(0, 100)
 
         Talk_button = QtGui.QPushButton("Talk from Input", self)
         Talk_button.resize(180, 80)
@@ -64,24 +73,14 @@ class Audio_View(QtGui.QWidget):
         self.tabWidget1.setFont(QFont("Consolas", 16))
 
         input_label = QtGui.QLabel("Input", self.tabWidget1)
-        input_label.move(20, 100)
+        input_label.move(20, 60)
         self.textEdit = QtGui.QTextEdit(self.tabWidget1)
         self.textEdit.resize(300, 170)
-        self.textEdit.move(100, 100)
-
-        volume_label = QtGui.QLabel(self.tabWidget1)
-        volume_label.setPixmap(QtGui.QPixmap('image/volume.png'))
-        print("volume")
-        volume_label.move(100, 50)
-
-        self.vSlider = QtGui.QSlider(self.tabWidget1)
-        self.vSlider.setGeometry(QtCore.QRect(160, 50, 210, 30))
-        self.vSlider.setOrientation(QtCore.Qt.Horizontal)
-        self.vSlider.setRange(0, 100)
+        self.textEdit.move(100, 60)
 
         talk_button = QtGui.QPushButton("Talk", self.tabWidget1)
         talk_button.resize(150, 50)
-        talk_button.move(180, 320)
+        talk_button.move(180, 280)
 
         self.tabWidget1.show()
 
@@ -96,24 +95,14 @@ class Audio_View(QtGui.QWidget):
         self.tabWidget2.setFont(QFont("Consolas", 16))
 
         musiclist_label = QtGui.QLabel("Music List", self.tabWidget2)
-        musiclist_label.move(10, 130)
+        musiclist_label.move(10, 100)
 
         self.musicList = QtGui.QComboBox(self.tabWidget2)
         self.musicList.insertItem(1,  "Sugar - Maroon 5" )
         self.musicList.insertItem(2, "I know you are trouble - Taylor Swift")
         self.musicList.insertItem(3, "Hello - Adele")
         self.musicList.resize(300, 50)
-        self.musicList.move(140, 120)
-
-        volume_label = QtGui.QLabel(self.tabWidget2)
-        volume_label.setPixmap(QtGui.QPixmap('image/volume.png'))
-        print("volume")
-        volume_label.move(100, 50)
-
-        self.vSlider = QtGui.QSlider(self.tabWidget2)
-        self.vSlider.setGeometry(QtCore.QRect(160, 50, 210, 30))
-        self.vSlider.setOrientation(QtCore.Qt.Horizontal)
-        self.vSlider.setRange(0, 100)
+        self.musicList.move(140, 90)
 
         play_button = QtGui.QPushButton("Play", self.tabWidget2)
         play_button.resize(70, 50)
@@ -139,14 +128,15 @@ class Audio_View(QtGui.QWidget):
     def talk_ButtonClicked(self):
         print(self.textEdit.toPlainText())
         text = str(self.textEdit.toPlainText())
-        print(self.vSlider.value())
-        volume = float(self.vSlider.value())
+        print(Audio_View.volSlider.value())
+        volume = float(Audio_View.volSlider.value())
         print(volume)
         con.talk_motion(text,volume)
+        self.textEdit.clear()
 
     def play_music(self):
         print(self.textEdit.toPlainText())
-        print(self.vSlider.value())
+        print(Audio_View.volSlider.value())
         self.textEdit.clear()
 
     def pause_music(self):

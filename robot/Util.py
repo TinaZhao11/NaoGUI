@@ -1,6 +1,6 @@
 from naoqi import ALProxy
-IP = "192.168.1.100"
-PORT = 9559
+IP = "127.0.0.1"
+PORT = 56419
 LOOP = 50
 PI = 3.1415926
 

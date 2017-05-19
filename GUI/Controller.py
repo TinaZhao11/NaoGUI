@@ -44,12 +44,14 @@ def click_record():
     ub.record_animation_buttons(ul.motion, ul.memory, "C:/Users/zeyu/Desktop/NaoGUI/", "result.csv")
     ul.motion.rest()
 
-def replay(music, step):
+def replay(music, step, volume):
     print("MUSIC")
     print(music)
     print(type(music))
     ul.motion.setStiffnesses("Body", 1)
     ul.posture.goToPosture("StandInit", 1.0)
+    vol = round(volume/10, 2)
+    ul.aup.setMasterVolume(vol)
     if music == 1:
         ub.load_animation(ul.motion, "C:/Users/zeyu/Desktop/NaoGUI/result.csv")
     if music == 2:

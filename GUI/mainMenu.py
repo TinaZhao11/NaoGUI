@@ -11,6 +11,7 @@ from PyQt4.QtGui import QFont
 
 from GUI import animation_view
 from GUI import audio_view
+from GUI import suprise_view
 
 
 class MainMenu(QtGui.QWidget):
@@ -18,6 +19,7 @@ class MainMenu(QtGui.QWidget):
         super(MainMenu, self).__init__()
         self.Animation = animation_view.Animation_View()
         self.Audio = audio_view.Audio_View()
+        self.Suprise = suprise_view.Suprise_View()
 
 
 
@@ -59,7 +61,7 @@ class MainMenu(QtGui.QWidget):
         self.button1.clicked.connect(self.button1_clicked)
         self.button4.clicked.connect(self.button4_clicked)
         self.button2.clicked.connect(self.button2_clicked)
-        #self.button3.clicked.connect(self.button3_clicked)
+        self.button3.clicked.connect(self.button3_clicked)
     # Set the window into Center
 
     def button1_clicked(self):
@@ -73,6 +75,12 @@ class MainMenu(QtGui.QWidget):
         # Form1 = QtGui.QDialog()
         self.Audio.show()
         print("button2_clicked")
+
+    def button3_clicked(self):
+        # self.hide()
+        # Form1 = QtGui.QDialog()
+        self.Suprise.show()
+        print("button3_clicked")
 
     def button4_clicked(self):
         # self.hide()

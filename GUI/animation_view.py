@@ -15,6 +15,7 @@ posture = ALProxy("ALRobotPosture", IP, PORT)
 aup = ALProxy("ALAudioPlayer", IP, PORT)
 
 class Animation_View(QtGui.QWidget):
+
     def __init__(self,parent=None):
         super(Animation_View, self).__init__(parent)
         self.initUI()
@@ -28,7 +29,7 @@ class Animation_View(QtGui.QWidget):
         self.leg = QtGui.QRadioButton()
         self.con_sub = QtGui.QGraphicsView()
         self.click_label = QtGui.QLabel()
-        self.vSlider = QtGui.QSlider()
+        self.volSlider = QtGui.QSlider()
 
 
 
@@ -48,10 +49,10 @@ class Animation_View(QtGui.QWidget):
         volume_label.setPixmap(QtGui.QPixmap('image/volume.png'))
         volume_label.move(70, 50)
 
-        self.vSlider = QtGui.QSlider(self)
-        self.vSlider.setGeometry(QtCore.QRect(130, 50, 210, 30))
-        self.vSlider.setOrientation(QtCore.Qt.Horizontal)
-        self.vSlider.setRange(0, 100)
+        Animation_View.volSlider = QtGui.QSlider(self)
+        Animation_View.volSlider.setGeometry(QtCore.QRect(130, 50, 210, 30))
+        Animation_View.volSlider.setOrientation(QtCore.Qt.Horizontal)
+        Animation_View.volSlider.setRange(0, 100)
 
         SM_button = QtGui.QPushButton("Standard Motion", self)
         SM_button.resize(180, 80)
@@ -345,12 +346,14 @@ class Animation_View(QtGui.QWidget):
         con.click_record()
 
     def Con_Replay_Clicked(self):
-        print(self.vSlider.value())
+        print("Volume")
+        print(Animation_View.volSlider.value())
+        volume = Animation_View.volSlider.value()
         print(self.music_group1.checkedId())
         music = self.music_group1.checkedId()
         print(self.leg_group1.checkedId())
         step = self.leg_group1.checkedId()
-        con.replay(music, step)
+        con.replay(music, step, volume)
 
     def Click_Replay_Clicked(self):
         music = self.music_group2.checkedId()
