@@ -1,37 +1,58 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-# sigslot.py
-
 import sys
-from PyQt4 import QtGui, QtCore
+# -*- encoding: UTF-8 -*-
+
+import time
+from naoqi import ALProxy
 
 
-class Example(QtGui.QWidget):
+def main(robotIP):
+    PORT = 9559
 
-    def __init__(self):
-        super(Example, self).__init__()
+    try:
+        motionProxy = ALProxy("ALMotion", robotIP, PORT)
+    except Exception,e:
+        print "Could not create proxy to ALMotion"
+        print "Error was: ",e
+        sys.exit(1)
 
-        self.initUI()
+    try:
+        postureProxy = ALProxy("ALRobotPosture", robotIP, PORT)
+    except Exception, e:
+        print "Could not create proxy to ALRobotPosture"
+        print "Error was: ", e
 
-    def initUI(self):
+    # Send NAO to Pose Init
+    postureProxy.goToPosture("StandInit", 0.5)
 
-        lcd = QtGui.QLCDNumber(self)
-        slider = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+    # A small step forwards and anti-clockwise with the left foot
+    legName  = ["LLeg"]
+    X        = 0.2
+    Y        = 0.1
+    Theta    = 0.3
+    footSteps = [[X, Y, Theta]]
+    timeList = [0.6]
+    clearExisting = False
+    #motionProxy.setFootSteps(legName, footSteps, timeList, clearExisting)
 
-        vbox = QtGui.QVBoxLayout()
-        vbox.addWidget(lcd)
-        vbox.addWidget(slider)
+    time.sleep(1.0)
 
-        self.setLayout(vbox)
-        self.connect(slider,  QtCore.SIGNAL('valueChanged(int)'), lcd,
-            QtCore.SLOT('display(int)'))
+    # A small step forwards and anti-clockwise with the left foot
+    legName = ["LLeg", "RLeg"]
+    X = 0.04
+    Y = 0.1
+    Theta = 0.3
+    footSteps = [[X, Y, Theta], [X, -Y, Theta]]
+    fractionMaxSpeed = [1.0, 0.3]
+    clearExisting = False
+    motionProxy.setFootStepsWithSpeed(legName, footSteps, fractionMaxSpeed, clearExisting)
 
-        self.setWindowTitle('Signal & slot')
-        self.resize(250, 150)
 
+if __name__ == "__main__":
+    robotIp = "192.168.1.100"
 
-app = QtGui.QApplication(sys.argv)
-ex = Example()
-ex.show()
-sys.exit(app.exec_())
+    if len(sys.argv) <= 1:
+        print "Usage python almotion_setfootsteps.py robotIP (optional default: 127.0.0.1)"
+    else:
+        robotIp = sys.argv[1]
+
+    main(robotIp)

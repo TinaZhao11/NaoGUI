@@ -1,41 +1,58 @@
-from naoqi import ALProxy
+import argparse
 import math
+from naoqi import ALProxy
+robotIP = "192.168.1.100"
+def main(robotIP, PORT=9559):
+    ''' Example of a whole body FootState
+    Warning: Needs a PoseInit before executing
+             Whole body balancer must be inactivated at the end of the script
+    '''
 
-IP = "192.168.1.101"
-PORT = 9559
+    motionProxy  = ALProxy("ALMotion", robotIP, PORT)
+    postureProxy = ALProxy("ALRobotPosture", robotIP, PORT)
 
+    # Wake up robot
+    motionProxy.wakeUp()
 
-motion = ALProxy("ALMotion", IP, PORT)
-posture = ALProxy("ALRobotPosture", IP, PORT)
+    # Send robot to Stand Init
+    postureProxy.goToPosture("StandInit", 0.5)
 
-motion.setStiffnesses("Body", 1.0)
-posture.goToPosture("StandInit", 1.0)
+    # Activate Whole Body Balancer.
+    isEnabled  = True
+    motionProxy.wbEnable(isEnabled)
 
-isEnabled = True
-motion.wbEnable(isEnabled)
+    # Legs are constrained in a plane
+    stateName  = "Plane"
+    supportLeg = "Legs"
+    motionProxy.wbFootState(stateName, supportLeg)
 
-stateName = "Fixed"
-supportLeg = "Legs"
-motion.wbFootState(stateName, supportLeg)
+    # HipYawPitch angleInterpolation
+    # Without Whole Body balancer, foot will not be keeped plane.
+    names      = "LHipYawPitch"
+    angleLists = [-45.0, 10.0, 0.0]
+    timeLists  = [3.0, 9.0, 18.0]
+    isAbsolute = True
+    angleLists = [angle*math.pi/180.0 for angle in angleLists]
+    try:
+        motionProxy.angleInterpolation(names, angleLists, timeLists, isAbsolute)
+    except Exception, errorMsg:
+        print str(errorMsg)
+        print "This example is not allowed on this robot."
+        exit()
 
-isEnable = True
-supportLeg = "Legs"
-motion.wbEnableBalanceConstraint(isEnable, supportLeg)
+    # Deactivate Whole Body Balancer.
+    isEnabled  = False
+    motionProxy.wbEnable(isEnabled)
 
-# KneePitch angleInterpolation
-# Without Whole Body balancer, foot will fall down
-names = ["LKneePitch", "RKneePitch"]
-angleLists = [[0.0, 40.0 * math.pi / 180.0], [0.0, 40.0 * math.pi / 180.0]]
-timeLists = [[5.0, 10.0], [5.0, 10.0]]
-isAbsolute = True
-try:
-    motion.angleInterpolation(names, angleLists, timeLists, isAbsolute)
-except Exception, errorMsg:
-    print str(errorMsg)
-    print "This example is not allowed on this robot."
-    exit()
+    # Go to rest position
+    motionProxy.rest()
 
-isEnabled = False
-motion.wbEnable(isEnabled)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--ip", type=str, default="192.168.1.100",
+                        help="Robot ip address")
+    parser.add_argument("--port", type=int, default=9559,
+                        help="Robot port number")
 
-motion.rest()
+    args = parser.parse_args()
+    main(args.ip, args.port)

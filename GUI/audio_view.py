@@ -45,10 +45,6 @@ class Audio_View(QtGui.QWidget):
         BM_button.move(140, 420)
         BM_button.setFont(QFont("Consolas", 15))
 
-        MR_button = QtGui.QPushButton("Rest", self)
-        MR_button.resize(80, 80)
-        MR_button.move(900, 20)
-        MR_button.setFont(QFont("Consolas", 14))
 
         self.connect(Talk_button, QtCore.SIGNAL('clicked()'),
                      self.set_Talk_view)
@@ -59,8 +55,6 @@ class Audio_View(QtGui.QWidget):
         self.connect(BM_button, QtCore.SIGNAL('clicked()'),
                      self.BM_ButtonClicked)
 
-        self.connect(MR_button, QtCore.SIGNAL('clicked()'),
-                     con.rest_motion)
 
     def set_Talk_view(self):
         self.tabWidget2.close()
@@ -134,8 +128,33 @@ class Audio_View(QtGui.QWidget):
         stop_button.move(340, 250)
 
         self.tabWidget2.show()
+        self.connect(play_button, QtCore.SIGNAL('clicked()'),
+                     self.play_music)
+        self.connect(play_button, QtCore.SIGNAL('clicked()'),
+                     self.pause_music)
+        self.connect(play_button, QtCore.SIGNAL('clicked()'),
+                     self.stop_music)
+
 
     def talk_ButtonClicked(self):
+        print(self.textEdit.toPlainText())
+        text = str(self.textEdit.toPlainText())
+        print(self.vSlider.value())
+        volume = float(self.vSlider.value())
+        print(volume)
+        con.talk_motion(text,volume)
+
+    def play_music(self):
+        print(self.textEdit.toPlainText())
+        print(self.vSlider.value())
+        self.textEdit.clear()
+
+    def pause_music(self):
+        print(self.textEdit.toPlainText())
+        print(self.vSlider.value())
+        self.textEdit.clear()
+
+    def stop_music(self):
         print(self.textEdit.toPlainText())
         print(self.vSlider.value())
         self.textEdit.clear()

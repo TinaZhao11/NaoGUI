@@ -1,33 +1,38 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 # sender.py
 
-from naoqi import ALProxy
 import time
-import Util
-import UpperBody as ub
+
+from naoqi import ALProxy
+
+from robot import Util, UpperBody as ub
 
 IP = Util.IP
 PORT = Util.PORT
 import sys
 from PyQt4 import QtGui, QtCore
+from PyQt4.QtGui import (QMainWindow)
 
 
 motion = ALProxy("ALMotion", IP, PORT)
+motion1 = ALProxy("ALMotion", IP, PORT)
 memory = ALProxy("ALMemory", IP, PORT)
 posture = ALProxy("ALRobotPosture", IP, PORT)
 aup = ALProxy("ALAudioPlayer", IP, PORT)
 
-class Example(QtGui.QMainWindow):
-
+class Example(QMainWindow):
     def __init__(self):
         super(Example, self).__init__()
-
         self.initUI()
 
 
     def initUI(self):
+
+        self.resize(1000, 800)
+        self.setCenter()
+        self.setWindowTitle('Animation')
+        self.setWindowIcon(QtGui.QIcon('image/Icon.png'))
 
         button1 = QtGui.QPushButton("Record", self)
         button1.move(200, 200)
@@ -38,6 +43,9 @@ class Example(QtGui.QMainWindow):
         button3 = QtGui.QPushButton("RecordbyButton", self)
         button3.move(200, 400)
 
+        button4 = QtGui.QPushButton("Back to Main", self)
+        button4.move(200, 500)
+
         self.connect(button1, QtCore.SIGNAL('clicked()'),
             self.button1Clicked)
 
@@ -46,11 +54,15 @@ class Example(QtGui.QMainWindow):
 
         self.connect(button3, QtCore.SIGNAL('clicked()'),
                      self.button3Clicked)
+        self.connect(button4, QtCore.SIGNAL('clicked()'),
+                     self.button4Clicked)
 
-        self.statusBar().showMessage('Ready')
-        self.setWindowTitle('Event sender')
-        self.resize(600, 800)
 
+    def setCenter(self):
+        # type: () -> object
+        screen = QtGui.QDesktopWidget().screenGeometry()
+        size = self.geometry()
+        self.move((screen.width() - size.width()) / 2, (screen.height() - size.height()) / 2)
 
     def button1Clicked(self):
 
@@ -67,8 +79,10 @@ class Example(QtGui.QMainWindow):
         self.statusBar().showMessage(sender.text() + ' is start')
         motion.setStiffnesses("Body", 1)
         posture.goToPosture("StandInit", 1.0)
-        aup.post.playFile("/home/nao/naoGUI/sugar.wav")
-        Util.load_animation(motion, "C:/Users/zeyu/Desktop/Nao/result.csv")
+        #aup.post.playFile("/home/nao/naoGUI/sugar.wav")
+       # up.load_animation(motion, "C:/Users/zeyu/Desktop/Nao/result.csv")
+
+        #ub.load_animation_with_beats(motion, aup,beats_list, "C:/Users/zeyu/Desktop/NaoGUI/result.csv")
         aup.stopAll()
         posture.goToPosture("Crouch", 1.0)
         motion.rest()
@@ -83,7 +97,14 @@ class Example(QtGui.QMainWindow):
         motion.rest()
         time.sleep(2.0)
 
-app = QtGui.QApplication(sys.argv)
-ex = Example()
-ex.show()
-sys.exit(app.exec_())
+    def button4Clicked(self):
+        self.close()
+
+
+
+if __name__ == '__main__':
+    app = QtGui.QApplication(sys.argv)
+    mainMenu = Example()
+    mainMenu.initUI()
+    mainMenu.show()
+    sys.exit(app.exec_())
