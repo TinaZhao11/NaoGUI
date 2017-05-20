@@ -10,9 +10,9 @@ def main(robotIP, PORT=9559):
         Warning: Needs a PoseInit before executing
                  Whole body balancer must be inactivated at the end of the script
     '''
-
-    motionProxy  = ALProxy("ALMotion", robotIP, PORT)
+    motionProxy = ALProxy("ALMotion", robotIP, PORT)
     postureProxy = ALProxy("ALRobotPosture", robotIP, PORT)
+
     # Wake up robot
     motionProxy.wakeUp()
 
@@ -31,65 +31,11 @@ def main(robotIP, PORT=9559):
     isEnable = True
     supportLeg = "Legs"
     motionProxy.wbEnableBalanceConstraint(isEnable, supportLeg)
-    useSensorValues = False
-
-    # Arms motion
-    effectorList = ["LArm", "RArm"]
 
     frame = motion.FRAME_ROBOT
-
-    # pathLArm
-    pathLArm = []
-    currentTf = motionProxy.getTransform("LArm", frame, useSensorValues)
-    # 1
-    target1Tf = almath.Transform(currentTf)
-    target1Tf.r2_c4 += 0.08  # y
-    target1Tf.r3_c4 += 0.14  # z
-
-    # 2
-    target2Tf = almath.Transform(currentTf)
-    target2Tf.r2_c4 -= 0.05  # y
-    target2Tf.r3_c4 -= 0.07  # z
-
-    pathLArm.append(list(target1Tf.toVector()))
-    pathLArm.append(list(target2Tf.toVector()))
-    pathLArm.append(list(target1Tf.toVector()))
-    pathLArm.append(list(target2Tf.toVector()))
-    pathLArm.append(list(target1Tf.toVector()))
-
-    # pathRArm
-    pathRArm = []
-    currentTf = motionProxy.getTransform("RArm", frame, useSensorValues)
-    # 1
-    target1Tf = almath.Transform(currentTf)
-    target1Tf.r2_c4 += 0.05  # y
-    target1Tf.r3_c4 -= 0.07  # z
-
-    # 2
-    target2Tf = almath.Transform(currentTf)
-    target2Tf.r2_c4 -= 0.08  # y
-    target2Tf.r3_c4 += 0.14  # z
-
-    pathRArm.append(list(target1Tf.toVector()))
-    pathRArm.append(list(target2Tf.toVector()))
-    pathRArm.append(list(target1Tf.toVector()))
-    pathRArm.append(list(target2Tf.toVector()))
-    pathRArm.append(list(target1Tf.toVector()))
-    pathRArm.append(list(target2Tf.toVector()))
-
-    pathList = [pathLArm, pathRArm]
-
-    axisMaskList = [almath.AXIS_MASK_VEL,  # for "LArm"
-                    almath.AXIS_MASK_VEL]  # for "RArm"
-
-    coef = 1.5
-    timesList = [[coef * (i + 1) for i in range(5)],  # for "LArm" in seconds
-                 [coef * (i + 1) for i in range(6)]]  # for "RArm" in seconds
-
-    # called cartesian interpolation
-    motionProxy.transformInterpolations(effectorList, frame, pathList, axisMaskList, timesList)
+    useSensorValues = False
     # Torso Motion
-    effectorList = ["Torso", "LArm", "RArm"]
+    effectorList = ["Torso"]
 
     dy = 0.06
     dz = 0.06
@@ -113,24 +59,25 @@ def main(robotIP, PORT=9559):
         pathTorso.append(list(target2Tf.toVector()))
         pathTorso.append(currentTf)
 
-    pathLArm = [motionProxy.getTransform("LArm", frame, useSensorValues)]
-    pathRArm = [motionProxy.getTransform("RArm", frame, useSensorValues)]
+    #pathLArm = [motionProxy.getTransform("LArm", frame, useSensorValues)]
+    #pathRArm = [motionProxy.getTransform("RArm", frame, useSensorValues)]
 
-    pathList = [pathTorso, pathLArm, pathRArm]
+    pathList = [pathTorso]
 
-    axisMaskList = [almath.AXIS_MASK_ALL,  # for "Torso"
-                    almath.AXIS_MASK_VEL,  # for "LArm"
-                    almath.AXIS_MASK_VEL]  # for "RArm"
+    axisMaskList = [almath.AXIS_MASK_ALL]  # for "Torso"
+                    #almath.AXIS_MASK_VEL,  # for "LArm"
+                    #almath.AXIS_MASK_VEL]  # for "RArm"
 
     coef = 0.5
     timesList = [
-        [coef * (i + 1) for i in range(12)],  # for "Torso" in seconds
-        [coef * 12],  # for "LArm" in seconds
-        [coef * 12]  # for "RArm" in seconds
+        [coef * (i + 1) for i in range(12)]  # for "Torso" in seconds
+       # [coef * 12],  # for "LArm" in seconds
+        #[coef * 12]  # for "RArm" in seconds
     ]
 
     motionProxy.transformInterpolations(
         effectorList, frame, pathList, axisMaskList, timesList)
+
     # Deactivate whole body
     isEnabled = False
     motionProxy.wbEnable(isEnabled)
@@ -140,6 +87,7 @@ def main(robotIP, PORT=9559):
 
     # Go to rest position
     motionProxy.rest()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

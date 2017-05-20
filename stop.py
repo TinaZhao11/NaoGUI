@@ -1,8 +1,8 @@
 from naoqi import ALProxy
 import math
 
-IP = "127.0.0.1"
-PORT = 56419
+IP = "192.168.1.100"
+PORT = 9559
 
 
 motion = ALProxy("ALMotion", IP, PORT)

@@ -22,6 +22,7 @@ def lybelly_motion():
     ul.posture.post.goToPosture("LyingBelly", 1.0)
 
 def rest_motion():
+    ul.aup.stopAll()
     ul.motion.rest()
 
 def walk_motion(x, y, r):
@@ -35,7 +36,7 @@ def talk_motion(text, volume):
 def con_record(loop):
     ul.posture.goToPosture("StandInit", 1.0)
     ul.motion.setStiffnesses("Body", 1)
-    ub.record_animation1(ul.motion, ul.memory, "C:/Users/zeyu/Desktop/NaoGUI/", loop, "result.csv")
+    ub.record_animation1(ul.motion, ul.memory, "C:/Users/zeyu/Desktop/NaoGUI/",  "result.csv")
     ul.motion.rest()
 
 def click_record():
@@ -44,13 +45,20 @@ def click_record():
     ub.record_animation_buttons(ul.motion, ul.memory, "C:/Users/zeyu/Desktop/NaoGUI/", "result.csv")
     ul.motion.rest()
 
+def demo1():
+    ul.motion.setStiffnesses("Body", 1)
+    ul.posture.goToPosture("StandInit", 1.0)
+    beats_list = ul.get_music("C:/Users/zeyu/Desktop/NaoGUI/out.csv")
+    ub.demo1(ul.motion, "C:/Users/zeyu/Desktop/NaoGUI/result.csv", ul.aup,"/home/nao/naoGUI/trouble.wav",beats_list)
+    ul.motion.rest()
+
 def replay(music, step, volume):
     print("MUSIC")
     print(music)
     print(type(music))
     ul.motion.setStiffnesses("Body", 1)
     ul.posture.goToPosture("StandInit", 1.0)
-    vol = round(volume/10, 2)
+    vol = round(volume/100, 2)
     ul.aup.setMasterVolume(vol)
     if music == 1:
         ub.load_animation(ul.motion, "C:/Users/zeyu/Desktop/NaoGUI/result.csv")
@@ -63,10 +71,10 @@ def replay(music, step, volume):
         musicpath = "/home/nao/naoGUI/trouble.wav"
         ub.load_animation_with_leg(ul.motion, ul.aup, beats_list, "C:/Users/zeyu/Desktop/NaoGUI/result.csv", musicpath)
 
-    ul.aup.stopAll()
-    ul.posture.goToPosture("Crouch", 1.0)
-    ul.motion.rest()
-    ul.motion.setStiffnesses("Body", 0.0)
+    #ul.aup.stopAll()
+    #ul.posture.goToPosture("Crouch", 1.0)
+    #ul.motion.rest()
+    #ul.motion.setStiffnesses("Body", 0.0)
 
 
 
