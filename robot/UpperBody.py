@@ -96,8 +96,6 @@ def load_animation(motion, path):
     :param motion: motion ALProxy
     :param path: csv file path
     """
-
-
     print "Start loading animation recorded..."
     try:
         animation_lists, length = Frw.load_result(path)
@@ -109,22 +107,32 @@ def load_animation(motion, path):
         angles = []
         times = []
         single_time = []
+        duration = 0.0
         for i in range(1, length+1):
             t = round(0.5*i, 2)
             single_time.append(t)
+        duration = single_time[-1]
         isAbsolute = True
+        print("Duration")
+        print(duration)
         for name in names:
             angles.append(animation_lists[name])
             times.append(single_time)
         try:
             start = time.time()
+           # motion.wbEnable(True)
             motion.post.angleInterpolation(names, angles, times, isAbsolute)
+            #motion.wbGoToBalance("LLeg", 3)
+           # motion.wbGoToBalance("Legs", 3)
+           # motion.wbGoToBalance("RLeg", 3)
+           # motion.wbGoToBalance("Legs", 3)
             print("is times")
             print(times)
             end = time.time()
             print "playing time: {} seconds.".format(end - start)
         except Exception :
             print "Nothing recorded!"
+        motion.waitUntilMoveIsFinished()
         print "finished"
         return True
 
@@ -185,8 +193,8 @@ def load_animation_with_beats(motion, aup, beats, path, musicpath):
             print(times[:len(FS.chaStepsLegList)])
             aup.post.playFile(musicpath)
             #motion.post.setFootSteps(FS.footStepsLegList, FS.footStepsMoveList, steptime, False)
-            motion.angleInterpolation(names, angles, times, isAbsolute)
-            motion.setFootSteps(FS.footStepsLegList, FS.footStepsMoveList, steptime, False)
+            motion.post.angleInterpolation(names, angles, times, isAbsolute)
+            #motion.setFootSteps(FS.footStepsLegList, FS.footStepsMoveList, steptime, False)
             end = time.time()
             print "playing time: {} seconds.".format(end - start)
         except Exception,errorMsg:
@@ -231,13 +239,22 @@ def demo1(motion, path, aup, musicpath, beats):
             times.append(single_time)
         try:
             start = time.time()
-            aup.post.playFile(musicpath)
+            #aup.post.playFile(musicpath)
             print(steptime)
             speedlist = [1, 1, 1,1, 1, 1, 1,1]
-            motion.angleInterpolation(names, angles, times, isAbsolute)
-            motion.setFootStepsWithSpeed(FS.footStepsLegList, FS.footStepsMoveList, speedlist, False)
-            time.sleep(2)
-            motion.setFootStepsWithSpeed(FS.footStepsLegList, FS.footStepsMoveList, speedlist, False)
+            motion.wbEnable(True)
+            motion.post.angleInterpolation(names, angles, times, isAbsolute)
+            motion.wbGoToBalance("LLeg", 5)
+            #motion.wbGoToBalance("Legs", 5)
+            motion.wbGoToBalance("LLeg", 6)
+            motion.wbGoToBalance("RLeg", 6)
+            motion.wbGoToBalance("Legs", 5)
+            motion.wbGoToBalance("Legs", 11)
+            ul.posture.goToPosture("StandInit", 0.5)
+           # motion.setStiffnesses("Body", 1)
+           # motion.setFootStepsWithSpeed(FS.footStepsLegList, FS.footStepsMoveList, speedlist, False)
+            #time.sleep(2)
+            #motion.setFootStepsWithSpeed(FS.footStepsLegList, FS.footStepsMoveList, speedlist, False)
             print("is times")
             print(times)
             end = time.time()
@@ -246,6 +263,75 @@ def demo1(motion, path, aup, musicpath, beats):
             print "Nothing recorded!"
         print "finished"
         motion.waitUntilMoveIsFinished()
+        aup.stopAll()
+        motion.rest()
+        return True
+
+def demo2(motion, path, aup, musicpath, beats):
+    timeline = beats
+    timestep = []
+    motion.wbEnable(True)
+    for l in range(4 * len(FS.chaStepsLegList) + 1):
+        # print(l)
+        if (4 * l <= len(timeline)):
+            x = float(timeline[l * 4])
+            timespot = round(x, 1)
+            timestep.append(timespot)
+    steptime = timestep[:len(FS.chaStepsLegList)]
+
+    print "Start loading animation recorded..."
+    try:
+        animation_lists, length = Frw.load_result(path)
+    except Exception:
+        motion.rest()
+        return False
+    else:
+        names = Frw.fieldnames
+        angles = []
+        times = []
+        single_time = []
+        for i in range(1, length+1):
+            t = round(0.5*i, 2)
+            single_time.append(t)
+        isAbsolute = True
+
+        for name in names:
+            angles.append(animation_lists[name])
+            times.append(single_time)
+        try:
+            start = time.time()
+            aup.post.playFile(musicpath)
+            print(steptime)
+            speedlist = [1, 1, 1,1, 1, 1, 1,1]
+            '''supportLeg = "LLeg"
+            duration = 3.0
+            motion.post.wbGoToBalance(supportLeg, duration)
+            supportLeg = "RLeg"
+            duration = 3.0
+            motion.wbGoToBalance(supportLeg, duration)'''
+            motion.angleInterpolation(names, angles, times, isAbsolute)
+            time.sleep(20)
+            #motion.wbEnable(False)
+            supportLeg = "LLeg"
+            duration = 3.0
+            motion.post.wbGoToBalance(supportLeg, duration)
+            motion.wbEnable(False)
+            motion.wbEnable(True)
+            supportLeg = "RLeg"
+            duration = 3.0
+            motion.wbGoToBalance(supportLeg, duration)
+            motion.wbEnable(False)
+            motion.setFootStepsWithSpeed(FS.chaStepsLegList, FS.chaStepsMoveList, speedlist, False)
+            time.sleep(2)
+            motion.setFootStepsWithSpeed(FS.chaStepsLegList, FS.chaStepsMoveList, speedlist, False)
+            print("is times")
+            print(times)
+            end = time.time()
+            print "playing time: {} seconds.".format(end - start)
+        except Exception :
+            print "Nothing recorded!"
+        print "finished"
+       # motion.waitUntilMoveIsFinished()
         aup.stopAll()
         motion.rest()
         return True

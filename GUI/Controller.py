@@ -1,6 +1,7 @@
 #This module contains the clicked button action to control action for robot
 from robot import Util as ul
 from robot import UpperBody as ub
+from robot import footstep as FS
 
 x = 0.0
 y = 0.0
@@ -47,9 +48,21 @@ def click_record():
 
 def demo1():
     ul.motion.setStiffnesses("Body", 1)
+    ul.posture.goToPosture("StandInit", 0.5)
+    ul.tts.say("Hello, my name is joko, ready to see my dance?Come some music!")
+    beats_list = ul.get_music("C:/Users/zeyu/Desktop/NaoGUI/out.csv")
+    speedlist = [1, 1, 1, 1, 1, 1, 1, 1]
+    ul.aup.post.playFile("/home/nao/naoGUI/trouble.wav")
+    ul.motion.wbEnable(True)
+    ul.motion.post.setFootStepsWithSpeed(FS.footStepsLegList, FS.footStepsMoveList, speedlist, False)
+    ub.demo1(ul.motion, "C:/Users/zeyu/Desktop/NaoGUI/demo1.csv", ul.aup,"/home/nao/naoGUI/trouble.wav",beats_list)
+    ul.motion.rest()
+
+def demo2():
+    ul.motion.setStiffnesses("Body", 1)
     ul.posture.goToPosture("StandInit", 1.0)
     beats_list = ul.get_music("C:/Users/zeyu/Desktop/NaoGUI/out.csv")
-    ub.demo1(ul.motion, "C:/Users/zeyu/Desktop/NaoGUI/result.csv", ul.aup,"/home/nao/naoGUI/trouble.wav",beats_list)
+    ub.demo2(ul.motion, "C:/Users/zeyu/Desktop/NaoGUI/trouble1.csv", ul.aup,"/home/nao/naoGUI/trouble.wav",beats_list)
     ul.motion.rest()
 
 def replay(music, step, volume):
@@ -57,19 +70,21 @@ def replay(music, step, volume):
     print(music)
     print(type(music))
     ul.motion.setStiffnesses("Body", 1)
-    ul.posture.goToPosture("StandInit", 1.0)
+    ul.posture.goToPosture("StandInit", 0.5)
     vol = round(volume/100, 2)
     ul.aup.setMasterVolume(vol)
-    if music == 1:
-        ub.load_animation(ul.motion, "C:/Users/zeyu/Desktop/NaoGUI/result.csv")
+    #if music == 1:
+
+        #ub.load_animation(ul.motion, "C:/Users/zeyu/Desktop/NaoGUI/result.csv","RLeg")
+
     if music == 2:
-        beats_list = ul.get_music("C:/Users/zeyu/Desktop/NaoGUI/out.csv")
-        musicpath = "/home/nao/naoGUI/sugar.wav"
+        beats_list = ul.get_music("C:/Users/zeyu/Desktop/NaoGUI/music_track/free.csv")
+        musicpath = "/home/nao/naoGUI/free.wav"
         ub.load_animation_with_beats(ul.motion, ul.aup, beats_list, "C:/Users/zeyu/Desktop/NaoGUI/result.csv",musicpath)
     if music == 3:
-        beats_list = ul.get_music("C:/Users/zeyu/Desktop/NaoGUI/out.csv")
-        musicpath = "/home/nao/naoGUI/trouble.wav"
-        ub.load_animation_with_leg(ul.motion, ul.aup, beats_list, "C:/Users/zeyu/Desktop/NaoGUI/result.csv", musicpath)
+        beats_list = ul.get_music("C:/Users/zeyu/Desktop/NaoGUI/music_track/free.csv")
+        musicpath = "/home/nao/naoGUI/free.wav"
+        #ub.load_animation_with_leg(ul.motion, ul.aup, beats_list, "C:/Users/zeyu/Desktop/NaoGUI/result.csv", musicpath)
 
     #ul.aup.stopAll()
     #ul.posture.goToPosture("Crouch", 1.0)

@@ -1,58 +1,63 @@
-import sys
 # -*- encoding: UTF-8 -*-
 
-import time
+''' Whole Body Motion: Foot State '''
+''' This example is only compatible with NAO '''
+
+import argparse
+import math
 from naoqi import ALProxy
 
+def main(robotIP, PORT=9559):
+    ''' Example of a whole body FootState
+    Warning: Needs a PoseInit before executing
+             Whole body balancer must be inactivated at the end of the script
+    '''
 
-def main(robotIP):
-    PORT = 9559
+    motionProxy  = ALProxy("ALMotion", robotIP, PORT)
+    postureProxy = ALProxy("ALRobotPosture", robotIP, PORT)
 
-    try:
-        motionProxy = ALProxy("ALMotion", robotIP, PORT)
-    except Exception,e:
-        print "Could not create proxy to ALMotion"
-        print "Error was: ",e
-        sys.exit(1)
+    # Wake up robot
+    motionProxy.wakeUp()
 
-    try:
-        postureProxy = ALProxy("ALRobotPosture", robotIP, PORT)
-    except Exception, e:
-        print "Could not create proxy to ALRobotPosture"
-        print "Error was: ", e
-
-    # Send NAO to Pose Init
+    # Send robot to Stand Init
     postureProxy.goToPosture("StandInit", 0.5)
 
-    # A small step forwards and anti-clockwise with the left foot
-    legName  = ["LLeg"]
-    X        = 0.2
-    Y        = 0.1
-    Theta    = 0.3
-    footSteps = [[X, Y, Theta]]
-    timeList = [0.6]
-    clearExisting = False
-    #motionProxy.setFootSteps(legName, footSteps, timeList, clearExisting)
+    # Activate Whole Body Balancer.
+    isEnabled  = True
+    motionProxy.wbEnable(isEnabled)
 
-    time.sleep(1.0)
+    # Legs are constrained in a plane
+    stateName  = "Plane"
+    supportLeg = "Legs"
+    motionProxy.wbFootState(stateName, supportLeg)
 
-    # A small step forwards and anti-clockwise with the left foot
-    legName = ["LLeg", "RLeg"]
-    X = 0.04
-    Y = 0.1
-    Theta = 0.3
-    footSteps = [[X, Y, Theta], [X, -Y, Theta]]
-    fractionMaxSpeed = [1.0, 0.3]
-    clearExisting = False
-    motionProxy.setFootStepsWithSpeed(legName, footSteps, fractionMaxSpeed, clearExisting)
+    # HipYawPitch angleInterpolation
+    # Without Whole Body balancer, foot will not be keeped plane.
+    names      = "LHipYawPitch"
+    angleLists = [-45.0, 10.0, 0.0]
+    timeLists  = [1.5, 3.0, 4.5]
+    isAbsolute = True
+    angleLists = [angle*math.pi/180.0 for angle in angleLists]
+    try:
+        motionProxy.angleInterpolation(names, angleLists, timeLists, isAbsolute)
+    except Exception, errorMsg:
+        print str(errorMsg)
+        print "This example is not allowed on this robot."
+        exit()
 
+    # Deactivate Whole Body Balancer.
+    isEnabled  = False
+    motionProxy.wbEnable(isEnabled)
+
+    # Go to rest position
+    motionProxy.rest()
 
 if __name__ == "__main__":
-    robotIp = "192.168.1.100"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--ip", type=str, default="192.168.1.100",
+                        help="Robot ip address")
+    parser.add_argument("--port", type=int, default=9559,
+                        help="Robot port number")
 
-    if len(sys.argv) <= 1:
-        print "Usage python almotion_setfootsteps.py robotIP (optional default: 127.0.0.1)"
-    else:
-        robotIp = sys.argv[1]
-
-    main(robotIp)
+    args = parser.parse_args()
+    main(args.ip, args.port)

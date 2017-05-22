@@ -63,6 +63,8 @@ class Suprise_View(QtGui.QWidget):
 
         self.connect(SM_button, QtCore.SIGNAL('clicked()'),
                      con.demo1)
+        self.connect(RM_button, QtCore.SIGNAL('clicked()'),
+                     con.demo2)
 
     def BM_ButtonClicked(self):
         self.close()
