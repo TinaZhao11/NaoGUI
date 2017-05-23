@@ -74,6 +74,16 @@ class Animation_View(QtGui.QWidget):
         MR_button.move(900, 20)
         MR_button.setFont(QFont("Consolas", 14))
 
+        S1_button = QtGui.QPushButton("Fixed", self)
+        S1_button.resize(80, 80)
+        S1_button.move(800, 20)
+        S1_button.setFont(QFont("Consolas", 14))
+
+        S0_button = QtGui.QPushButton("Relax", self)
+        S0_button.resize(80, 80)
+        S0_button.move(700, 20)
+        S0_button.setFont(QFont("Consolas", 14))
+
 
         self.connect(SM_button, QtCore.SIGNAL('clicked()'),
                      self.set_SM_view)
@@ -83,9 +93,14 @@ class Animation_View(QtGui.QWidget):
 
         self.connect(BM_button, QtCore.SIGNAL('clicked()'),
                      self.BM_ButtonClicked)
-
         self.connect(MR_button, QtCore.SIGNAL('clicked()'),
-                     con.rest_motion)
+                     con.stop_all)
+
+        self.connect(S1_button, QtCore.SIGNAL('clicked()'),
+                     con.s1)
+
+        self.connect(S0_button, QtCore.SIGNAL('clicked()'),
+                     con.s0)
 
 
     def set_SM_view(self):
@@ -225,13 +240,6 @@ class Animation_View(QtGui.QWidget):
         con_record_button.move(130, 100)
         con_record_button.resize(200, 50)
 
-        '''whitebg = QPalette()
-        whitebg.setColor(QPalette.Background, QtGui.QColor(200,100,100))
-        self.con_sub = QtGui.QGraphicsView(tab1)
-        self.con_sub.move(130,  150)
-        self.con_sub.resize(480, 200)
-        self.con_sub.setPalette(whitebg)'''
-
         music_label = QtGui.QLabel("Music", tab1)
         music_label.move(20, 170)
 
@@ -356,10 +364,14 @@ class Animation_View(QtGui.QWidget):
         con.replay(music, step, volume)
 
     def Click_Replay_Clicked(self):
+        print("Volume")
+        print(Animation_View.volSlider.value())
+        volume = Animation_View.volSlider.value()
+        print(self.music_group2.checkedId())
         music = self.music_group2.checkedId()
         print(self.leg_group2.checkedId())
         step = self.leg_group2.checkedId()
-        con.replay(music, step)
+        con.replay(music, step, volume)
 
     def BM_ButtonClicked(self):
         self.tabWidget1.close()
