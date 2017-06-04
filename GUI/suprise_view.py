@@ -3,10 +3,10 @@ from PyQt4.QtGui import QFont
 from naoqi import ALProxy
 
 import Controller as con
-from robot import Util
+from robot import Util as ul
 
-IP = Util.IP
-PORT = Util.PORT
+IP = ul.RobotIP
+PORT = ul.RobotPORT
 
 class Suprise_View(QtGui.QWidget):
     def __init__(self, parent=None):
@@ -16,18 +16,18 @@ class Suprise_View(QtGui.QWidget):
 
     def initUI(self):
         self.resize(1000, 600)
-        self.setWindowTitle('Animation')
-        self.setWindowIcon(QtGui.QIcon('image/Icon.png'))
+        self.setWindowTitle('Surprise Demo')
+        self.setWindowIcon(QtGui.QIcon('C:/Users/zeyu/Desktop/NaoGUI/image/Icon.png'))
 
         animationBG_image = QtGui.QPixmap()
-        animationBG_image.load('image/subBG.png')
+        animationBG_image.load('C:/Users/zeyu/Desktop/NaoGUI/image/subBG.png')
         animationBG = QtGui.QPalette()
         animationBG.setBrush(self.backgroundRole(), QtGui.QBrush(animationBG_image))
         self.setPalette(animationBG)
         self.setAutoFillBackground(True)
 
         volume_label = QtGui.QLabel(self)
-        volume_label.setPixmap(QtGui.QPixmap('image/volume.png'))
+        volume_label.setPixmap(QtGui.QPixmap('C:/Users/zeyu/Desktop/NaoGUI/image/volume.png'))
         volume_label.move(70, 50)
 
         Suprise_View.volSlider = QtGui.QSlider(self)
@@ -58,8 +58,8 @@ class Suprise_View(QtGui.QWidget):
 
         self.connect(BM_button, QtCore.SIGNAL('clicked()'),
                      self.BM_ButtonClicked)
-        self.connect(BM_button, QtCore.SIGNAL('clicked()'),
-                     self.BM_ButtonClicked)
+        self.connect(MR_button, QtCore.SIGNAL('clicked()'),
+                     con.stop_all)
 
         self.connect(SM_button, QtCore.SIGNAL('clicked()'),
                      con.demo1)

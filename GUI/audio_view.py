@@ -3,10 +3,10 @@ from PyQt4.QtGui import QFont
 from naoqi import ALProxy
 
 import Controller as con
-from robot import Util
+from robot import Util as ul
 
-IP = Util.IP
-PORT = Util.PORT
+IP = ul.RobotIP
+PORT = ul.RobotPORT
 
 class Audio_View(QtGui.QWidget):
     def __init__(self,parent=None):
@@ -21,17 +21,16 @@ class Audio_View(QtGui.QWidget):
     def initUI(self):
         self.resize(1000, 600)
         self.setWindowTitle('Audio')
-        self.setWindowIcon(QtGui.QIcon('image/Icon.png'))
-
+        self.setWindowIcon(QtGui.QIcon('C:/Users/zeyu/Desktop/NaoGUI/image/Icon.png'))
         audioBG_image = QtGui.QPixmap()
-        audioBG_image.load('image/subBG.png')
+        audioBG_image.load('C:/Users/zeyu/Desktop/NaoGUI/image/subBG.png')
         audioBG = QtGui.QPalette()
         audioBG.setBrush(self.backgroundRole(), QtGui.QBrush(audioBG_image))
         self.setPalette(audioBG)
         self.setAutoFillBackground(True)
 
         volume_label = QtGui.QLabel(self)
-        volume_label.setPixmap(QtGui.QPixmap('image/volume.png'))
+        volume_label.setPixmap(QtGui.QPixmap('C:/Users/zeyu/Desktop/NaoGUI/image/volume.png'))
         volume_label.move(70, 50)
 
         Audio_View.volSlider = QtGui.QSlider(self)
@@ -39,27 +38,22 @@ class Audio_View(QtGui.QWidget):
         Audio_View.volSlider.setOrientation(QtCore.Qt.Horizontal)
         Audio_View.volSlider.setRange(0, 100)
 
-        Talk_button = QtGui.QPushButton("Talk from Input", self)
+        Talk_button = QtGui.QPushButton("Text to Speech", self)
         Talk_button.resize(180, 80)
-        Talk_button.move(140, 100)
+        Talk_button.move(140, 150)
         Talk_button.setFont(QFont("Consolas", 15))
 
-        PM_button = QtGui.QPushButton("Play Music", self)
-        PM_button.resize(180, 80)
-        PM_button.move(140, 260)
-        PM_button.setFont(QFont("Consolas", 15))
+
 
         BM_button = QtGui.QPushButton("Back to Main", self)
         BM_button.resize(180, 80)
-        BM_button.move(140, 420)
+        BM_button.move(140, 320)
         BM_button.setFont(QFont("Consolas", 15))
 
 
         self.connect(Talk_button, QtCore.SIGNAL('clicked()'),
                      self.set_Talk_view)
 
-        self.connect(PM_button, QtCore.SIGNAL('clicked()'),
-                     self.set_PM_view)
 
         self.connect(BM_button, QtCore.SIGNAL('clicked()'),
                      self.BM_ButtonClicked)

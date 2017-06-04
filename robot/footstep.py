@@ -1,12 +1,14 @@
 import argparse
 import sys
-import time
+import sqlite3
+
+conn = sqlite3.connect('animation.db')
+c = conn.cursor()
 
 from naoqi import ALProxy
 
 from robot import FilesRW as Frw
 
-robotIP = "192.168.1.100"
 
 footStepsList = []
 footStepsLegList = []
@@ -19,14 +21,14 @@ footStepsLegList.append("RLeg")
 footStepsLegList.append("RLeg")
 footStepsLegList.append("RLeg")
 footStepsLegList.append("RLeg")
-'''footStepsLegList.append("LLeg")
+footStepsLegList.append("LLeg")
 footStepsLegList.append("LLeg")
 footStepsLegList.append("LLeg")
 footStepsLegList.append("LLeg")
 footStepsLegList.append("RLeg")
 footStepsLegList.append("RLeg")
 footStepsLegList.append("RLeg")
-footStepsLegList.append("RLeg")'''
+footStepsLegList.append("RLeg")
 
 footStepsMoveList.append([0.06, 0.0, 0.0])
 footStepsMoveList.append([0.0, 0.0, 0.0])
@@ -36,14 +38,15 @@ footStepsMoveList.append([0.06, 0.0, 0.0])
 footStepsMoveList.append([0.0, 0.0, 0.0])
 footStepsMoveList.append([0.06, 0.0, 0.0])
 footStepsMoveList.append([0.0, 0.0, 0.0])
-'''footStepsMoveList.append([0.06, 0.0, 0.0])
-footStepsMoveList.append([0.0, 0.0, 0.0])
 footStepsMoveList.append([0.06, 0.0, 0.0])
 footStepsMoveList.append([0.0, 0.0, 0.0])
 footStepsMoveList.append([0.06, 0.0, 0.0])
 footStepsMoveList.append([0.0, 0.0, 0.0])
 footStepsMoveList.append([0.06, 0.0, 0.0])
-footStepsMoveList.append([0.0, 0.0, 0.0])'''
+footStepsMoveList.append([0.0, 0.0, 0.0])
+footStepsMoveList.append([0.06, 0.0, 0.0])
+footStepsMoveList.append([0.0, 0.0, 0.0])
+
 
 chaStepsLegList = []
 chaStepsMoveList = []
@@ -55,14 +58,14 @@ chaStepsLegList.append("RLeg")
 chaStepsLegList.append("RLeg")
 chaStepsLegList.append("LLeg")
 chaStepsLegList.append("RLeg")
-'''chaStepsLegList.append("LLeg")
+chaStepsLegList.append("LLeg")
 chaStepsLegList.append("LLeg")
 chaStepsLegList.append("RLeg")
 chaStepsLegList.append("LLeg")
 chaStepsLegList.append("RLeg")
 chaStepsLegList.append("RLeg")
 chaStepsLegList.append("LLeg")
-chaStepsLegList.append("RLeg")'''
+chaStepsLegList.append("RLeg")
 
 chaStepsMoveList.append([0.16, 0.1, 0.0])
 chaStepsMoveList.append([0.00, 0.16, 0.0])
@@ -72,14 +75,14 @@ chaStepsMoveList.append([-0.04, -0.1, 0.0])
 chaStepsMoveList.append([0.00, -0.16, 0.0])
 chaStepsMoveList.append([0.00, 0.1, 0.0])
 chaStepsMoveList.append([0.00, -0.16, 0.0])
-'''chaStepsMoveList.append([0.16, 0.1, 0.0])
+chaStepsMoveList.append([0.16, 0.1, 0.0])
 chaStepsMoveList.append([0.00, 0.16, 0.0])
 chaStepsMoveList.append([0.00, -0.1, 0.0])
 chaStepsMoveList.append([0.00, 0.16, 0.0])
 chaStepsMoveList.append([-0.04, -0.1, 0.0])
 chaStepsMoveList.append([0.00, -0.16, 0.0])
 chaStepsMoveList.append([0.00, 0.1, 0.0])
-chaStepsMoveList.append([0.00, -0.16, 0.0])'''
+chaStepsMoveList.append([0.00, -0.16, 0.0])
 
 
 

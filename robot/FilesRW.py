@@ -33,8 +33,7 @@ def create_csv(path, filename):
         writer.writeheader()
     return path
 
-
-def load_result(path):
+def load_result_demo(path):
     """
     Load results from CSV file.
     """
@@ -55,19 +54,6 @@ def load_result(path):
     results["HeadPitch"] = []
     results["RWristYaw"] = []
     results["LWristYaw"] = []
-    #results["RAnkleRoll"] = []
-    #results["LAnkleRoll"] = []
-    #results["RAnklePitch"] = []
-    #results["LAnklePitch"] = []
-    #results["RKneePitch"] = []
-    #results["LKneePitch"] = []
-    #results["RHipRoll"] = []
-    #results["LHipRoll"] = []
-    #results["RHipPitch"] = []
-    #results["LHipPitch"] = []
-    #results["RHipYawPitch"] = []
-    #results["LHipYawPitch"] = []
-
     with open(path, "rb") as csvfile:
         print(path)
         reader = csv.DictReader(csvfile)
@@ -75,8 +61,41 @@ def load_result(path):
         for row in reader:
             length += 1
             for fieldname in fieldnames:
-                #print(row[fieldname])
-                #print(type(float(row[fieldname])))
                 results[fieldname].append(float(row[fieldname]))
     return results, length
+
+
+def load_result(list):
+    """
+    Load results from CSV file.
+    """
+    results1 = {}
+
+    results1["RShoulderRoll"] = []
+    results1["LShoulderRoll"] = []
+    results1["RShoulderPitch"] = []
+    results1["LShoulderPitch"] = []
+    results1["RElbowRoll"] = []
+    results1["LElbowRoll"] = []
+    results1["RElbowYaw"] = []
+    results1["LElbowYaw"] = []
+    results1["HeadYaw"] = []
+    results1["HeadPitch"] = []
+    results1["RWristYaw"] = []
+    results1["LWristYaw"] = []
+    results1["HeadYaw"] = []
+    results1["HeadPitch"] = []
+    results1["RWristYaw"] = []
+    results1["LWristYaw"] = []
+    length = 0
+
+    for line in list:
+        print line
+        print type(line)
+        length += 1
+        for fieldname in fieldnames:
+            results1[fieldname].append(float(line[fieldname]))
+
+
+    return results1, length
 

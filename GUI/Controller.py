@@ -2,6 +2,15 @@
 from robot import Util as ul
 from robot import UpperBody as ub
 from robot import footstep as FS
+import manageData as mD
+
+
+from naoqi import ALProxy
+IP = ul.RobotIP
+PORT = ul.RobotPORT
+motion = ALProxy("ALMotion", IP, PORT)
+aup = ALProxy("ALAudioPlayer", IP, PORT)
+
 import time
 
 x = 0.0
@@ -35,16 +44,16 @@ def talk_motion(text, volume):
     ul.tts.setVolume(volume/100)
     ul.tts.say(text)
 
-def con_record(loop):
+def con_record(name):
     ul.posture.goToPosture("StandInit", 1.0)
     ul.motion.setStiffnesses("Body", 1)
-    ub.record_animation1(ul.motion, ul.memory, "C:/Users/zeyu/Desktop/NaoGUI/",  "result.csv")
+    ub.record_animation1(ul.motion, ul.memory, "C:/Users/zeyu/Desktop/NaoGUI/",  "result.csv",name)
     ul.motion.rest()
 
-def click_record():
+def click_record(name):
     ul.posture.goToPosture("StandInit", 1.0)
     ul.motion.setStiffnesses("Body", 1)
-    ub.record_animation_buttons(ul.motion, ul.memory, "C:/Users/zeyu/Desktop/NaoGUI/", "result.csv")
+    ub.record_animation_buttons(ul.motion, ul.memory, "C:/Users/zeyu/Desktop/NaoGUI/",  "result.csv",name)
     ul.motion.rest()
 
 def s1():
@@ -57,12 +66,18 @@ def s0():
 def demo1():
     ul.motion.setStiffnesses("Body", 1)
     ul.posture.goToPosture("StandInit", 0.5)
-    ul.tts.say("Hello, my name is joko, ready to see my dance?Come some music!")
+    #ul.tts.say("Hello, my name is joko, ready to see my dance?Come some music!")
     beats_list = ul.get_music("C:/Users/zeyu/Desktop/NaoGUI/out.csv")
     speedlist = [1, 1, 1, 1, 1, 1, 1, 1]
+    leglist = eval(mD.getLegList("Box Step"))
+    leg = leglist[0:8]
+    steplist = eval(mD.getStepList("Box Step"))
+    step = steplist[0:8]
     ul.aup.post.playFile("/home/nao/naoGUI/trouble.wav")
     ul.motion.wbEnable(True)
-    ul.motion.post.setFootStepsWithSpeed(FS.footStepsLegList, FS.footStepsMoveList, speedlist, False)
+    print leg
+    print step
+    ul.motion.post.setFootStepsWithSpeed(leg, step, speedlist, False)
     ub.demo1(ul.motion, "C:/Users/zeyu/Desktop/NaoGUI/demo1.csv", ul.aup,"/home/nao/naoGUI/trouble.wav",beats_list)
     ul.motion.rest()
 
@@ -71,51 +86,89 @@ def demo2():
     ul.posture.goToPosture("StandInit", 0.5)
     beats_list1 = ul.get_music("C:/Users/zeyu/Desktop/NaoGUI/music_track/moon.csv")
     musicpath1 = "/home/nao/naoGUI/moon.wav"
-    ub.load_animation_with_beats(ul.motion, ul.aup, beats_list1, "C:/Users/zeyu/Desktop/NaoGUI/result1.csv",  musicpath1)
+    ub.load_animation_for_demo(ul.motion, ul.aup, beats_list1, "C:/Users/zeyu/Desktop/NaoGUI/result1.csv",  musicpath1)
 
     beats_list2 = ul.get_music("C:/Users/zeyu/Desktop/NaoGUI/music_track/sky.csv")
     musicpath2 = "/home/nao/naoGUI/sky.wav"
-    ub.load_animation_with_beats(ul.motion, ul.aup, beats_list2, "C:/Users/zeyu/Desktop/NaoGUI/result2.csv",
+    ub.load_animation_for_demo(ul.motion, ul.aup, beats_list2, "C:/Users/zeyu/Desktop/NaoGUI/result2.csv",
                                  musicpath2)
-    ul.aup.stopAll()
-    ul.motion.rest()
 
-def replay(music, step, volume):
+
+def replay(music, step, animataion,volume):
     print("MUSIC")
     print(music)
     print(type(music))
     ul.motion.setStiffnesses("Body", 1)
     ul.posture.goToPosture("StandInit", 0.5)
-    vol = round(volume/100, 2)
-    #ul.aup.setMasterVolume(vol)
-    if music == 1:
-        if step == 2:
-            ub.step2(ul.motion)
-            ub.load_animation(ul.motion, "C:/Users/zeyu/Desktop/NaoGUI/result.csv")
-        if step == 3:
-            ub.load_animation(ul.motion, "C:/Users/zeyu/Desktop/NaoGUI/result.csv")
-    if music == 2:
-        beats_list1 = ul.get_music("C:/Users/zeyu/Desktop/NaoGUI/music_track/moonlight.csv")
-        musicpath1 = "/home/nao/naoGUI/moonlight.wav"
-        ub.load_animation_with_beats(ul.motion, ul.aup, beats_list1, "C:/Users/zeyu/Desktop/NaoGUI/result.csv", musicpath1)
-        #ul.aup.stopAll()
-    if music == 3:
-        beats_list2 = ul.get_music("C:/Users/zeyu/Desktop/NaoGUI/music_track/fullsky.csv")
-        musicpath2 = "/home/nao/naoGUI/sky.wav"
-        ub.load_animation_with_beats(ul.motion, ul.aup, beats_list2, "C:/Users/zeyu/Desktop/NaoGUI/result.csv",
-                                     musicpath2)
-        #ul.aup.stopAll()
-    #ul.motion.rest()
-    #ul.aup.stopAll()
-    #ul.posture.goToPosture("Crouch", 1.0)
-    #ul.motion.rest()
-    #ul.motion.setStiffnesses("Body", 0.0)
 
+    if mD.getAnimationList(animataion) != None:
+        animationList = eval(mD.getAnimationList(animataion))
+    if mD.getMusicList(music) != None:
+        musicList = eval(mD.getMusicList(music))
+    if mD.getLegList(step) != None:
+        stepleglist = eval(mD.getLegList(step))
+    if mD.getStepList(step) != None:
+        steplist = eval(mD.getStepList(step))
+        vol = round(volume/100, 2)
+    if music == "None":
+        if step == "None" and animataion != "None":
+            ub.load_animation(ul.motion, animationList)
+        if step == "None" and animataion == "None":
+            ul.motion.rest()
+        if step != "None" and animataion == "None":
+            ub.step(ul.motion, stepleglist, steplist)
+        if step != "None" and animataion != "None":
+            ub.load_animation(ul.motion, animationList)
+            ub.step(ul.motion, stepleglist, steplist)
+    if step == "None":
+        if music == "None" and animataion != "None":
+            ub.load_animation(ul.motion, animationList)
+        if music == "None" and animataion == "None":
+            ul.motion.rest()
+        if music != "None" and animataion == "None":
+            if music == "Sky":
+                ul.aup.post.playFile('/home/nao/naoGUI/sky.wav')
+            if music == "Moonlight Sonata":
+                ul.aup.post.playFile('/home/nao/naoGUI/Moonlight Sonata.wav')
+        if music != "None" and animataion != "None":
+            if music == "Sky":
+                ul.aup.post.playFile('/home/nao/naoGUI/sky.wav')
+                ub.load_animation_with_beats(ul.motion,animationList, musicList)
+            if music == "Moonlight Sonata":
+                ul.aup.post.playFile('/home/nao/naoGUI/Moonlight Sonata.wav')
+                ub.load_animation_with_beats(ul.motion,animationList, musicList)
+
+    if animataion == "None":
+        if music == "None" and step != "None":
+            ub.step(ul.motion, stepleglist, steplist)
+        if music == "None" and step == "None":
+            ul.motion.rest()
+        if music != "None" and step == "None":
+            if music == "Sky":
+                ul.aup.post.playFile('/home/nao/naoGUI/sky.wav')
+            if music == "Moonlight Sonata":
+                ul.aup.post.playFile('/home/nao/naoGUI/Moonlight Sonata.wav')
+        if music != "None" and step != "None":
+            if music == "Sky":
+                ul.aup.post.playFile('/home/nao/naoGUI/sky.wav')
+                ub.step(ul.motion, stepleglist, steplist)
+            if music == "Moonlight Sonata":
+                ul.aup.post.playFile('/home/nao/naoGUI/Moonlight Sonata.wav')
+                ub.step(ul.motion, stepleglist, steplist)
+    if animataion != "None" and music != "None" and step != "None":
+            if music == "Sky":
+                ul.aup.post.playFile('/home/nao/naoGUI/sky.wav')
+                ub.load_animation_with_beats(ul.motion, animationList, musicList)
+                ub.step(ul.motion, stepleglist, steplist)
+            if music == "Moonlight Sonata":
+                ul.aup.post.playFile('/home/nao/naoGUI/Moonlight Sonata.wav')
+                ub.load_animation_with_beats(ul.motion, animationList, musicList)
+                ub.step(ul.motion, stepleglist, steplist)
 
 
 def stop_all():
     ul.aup.stopAll()
-    ul.motion.rest()
+    ul.stopmotion.rest()
 
 
 

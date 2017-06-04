@@ -17,20 +17,19 @@ from GUI import suprise_view
 class MainMenu(QtGui.QWidget):
     def __init__(self):
         super(MainMenu, self).__init__()
+        self.setMainWindow()
         self.Animation = animation_view.Animation_View()
         self.Audio = audio_view.Audio_View()
         self.Suprise = suprise_view.Suprise_View()
-
-
 
     def setMainWindow(self):
         #Draw the main windows
         self.resize(1000, 600)
         self.setWindowTitle('Naopy')
-        self.setWindowIcon(QtGui.QIcon('image/Icon.png'))
+        self.setWindowIcon(QtGui.QIcon('C:/Users/zeyu/Desktop/NaoGUI/image/Icon.png'))
 
         mainBG_image = QtGui.QPixmap()
-        mainBG_image.load('image/mainBG.png')
+        mainBG_image.load('C:/Users/zeyu/Desktop/NaoGUI/image/mainBG.png')
         mainBG = QtGui.QPalette()
         mainBG.setBrush(self.backgroundRole(), QtGui.QBrush(mainBG_image))
         self.setPalette(mainBG)
@@ -48,7 +47,7 @@ class MainMenu(QtGui.QWidget):
         self.button2.move(200, 190)
         self.button2.setFont(QFont("Consolas", 20))
 
-        self.button3 = QtGui.QPushButton("Suprise", self)
+        self.button3 = QtGui.QPushButton("Surprise", self)
         self.button3.resize(180, 80)
         self.button3.move(200, 320)
         self.button3.setFont(QFont("Consolas", 20))
@@ -88,14 +87,3 @@ class MainMenu(QtGui.QWidget):
         # self.hide()
         self.close()
         print("button4_clicked")
-
-
-        #Form1.exec_()
-        #self.form.show()
-
-if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
-    mainMenu = MainMenu()
-    mainMenu.setMainWindow()
-    mainMenu.show()
-    sys.exit(app.exec_())

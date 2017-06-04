@@ -1,9 +1,10 @@
 import time
+from GUI import manageData as mD
 
 from robot import ALMemoryKey, FilesRW as Frw, footstep as FS, Util as ul
 
 
-def record_animation_buttons(motion, memory, path, filename):
+def record_animation_buttons(motion, memory, path, filename,name):
     print "operate the robot..."
     csv_path = Frw.create_csv(path, filename)
     animation_list = []
@@ -32,10 +33,12 @@ def record_animation_buttons(motion, memory, path, filename):
     print "Finish recording..."
     print "saving data..."
     Frw.save_result(animation_list, csv_path)
+    result = str(animation_list)
+    mD.save_record(name, result, len(animation_list))
     return csv_path
 
 
-def record_animation1(motion, memory, path, filename):
+def record_animation1(motion, memory, path, filename,name):
     print "operate the robot..."
     csv_path = Frw.create_csv(path, filename)
     animation_list = []
@@ -52,6 +55,9 @@ def record_animation1(motion, memory, path, filename):
     end = time.time()
     print "recording time: {} seconds.".format(end - start)
     Frw.save_result(animation_list, csv_path)
+    result = str(animation_list)
+    print(type(name))
+    mD.save_record(name, result, len(animation_list))
     return csv_path
 
 
@@ -90,7 +96,7 @@ def record_animation(motion, memory, path, loop, filename):
     Frw.save_result(animation_list, csv_path)
     return csv_path
 
-def load_animation(motion, path):
+def load_animation(motion, animationlist):
     """
     Load animation from csv file
     :param motion: motion ALProxy
@@ -98,7 +104,9 @@ def load_animation(motion, path):
     """
     print "Start loading animation recorded..."
     try:
-        animation_lists, length = Frw.load_result(path)
+        animation_lists, length = Frw.load_result(animationlist)
+        #print animation_lists
+        #print type(animation_lists)
     except Exception:
         motion.rest()
         return False
@@ -116,28 +124,72 @@ def load_animation(motion, path):
         print("Duration")
         print(duration)
         for name in names:
+            print(name)
+            print(type(name))
+            print(type(animation_lists))
             angles.append(animation_lists[name])
             times.append(single_time)
+        motion.wbEnable(True)
         try:
             start = time.time()
-           # motion.wbEnable(True)
             motion.post.angleInterpolation(names, angles, times, isAbsolute)
-            #motion.wbGoToBalance("LLeg", 3)
-           # motion.wbGoToBalance("Legs", 3)
-           # motion.wbGoToBalance("RLeg", 3)
-           # motion.wbGoToBalance("Legs", 3)
             print("is times")
             print(times)
             end = time.time()
             print "playing time: {} seconds.".format(end - start)
         except Exception :
             print "Nothing recorded!"
-        motion.post.waitUntilMoveIsFinished()
+        motion.waitUntilMoveIsFinished()
+        motion.wbEnable(False)
         print "finished"
         return True
 
 
-def load_animation_with_beats(motion, aup, beats, path, musicpath):
+def load_animation_with_beats(motion,animationList, musicList):
+
+    print "Start loading animation records and music beats"
+    timeline = musicList
+    print("timeline")
+    print(timeline)
+    print("footstepLists")
+    print(len(FS.footStepsLegList))
+    try:
+        animation_lists, length = Frw.load_result(animationList)
+    except Exception:
+        motion.rest()
+        return False
+    else:
+        names = Frw.fieldnames
+        angles = []
+        times = []
+        single_time = musicList
+        single_time_len = len(single_time)
+        isAbsolute = True
+        for name in names:
+            animation_lenth = len(animation_lists[name])
+            if animation_lenth<single_time_len:
+                r = single_time_len%animation_lenth
+                n = single_time_len/animation_lenth
+                animation_lists[name] = n*animation_lists[name] + animation_lists[name][0:r]
+            angles.append(animation_lists[name])
+            times.append(single_time)
+        try:
+            start = time.time()
+            print len(angles)
+            print len(times)
+            motion.post.angleInterpolation(names, angles, times, isAbsolute)
+            end = time.time()
+            print "playing time: {} seconds.".format(end - start)
+        except Exception,errorMsg:
+           # print "Nothing recorded!"
+            print str(errorMsg)
+            print "This example is not allowed on this robot."
+        motion.post.waitUntilMoveIsFinished()
+        #xaup.stopAll()
+        print "finished"
+        return True
+
+def load_animation_for_demo(motion, aup, beats, path, musicpath):
 
     print "Start loading animation records and music beats"
     timeline = beats
@@ -146,7 +198,7 @@ def load_animation_with_beats(motion, aup, beats, path, musicpath):
     print("footstepLists")
     print(len(FS.footStepsLegList))
     try:
-        animation_lists, length = Frw.load_result(path)
+        animation_lists, length = Frw.load_result_demo(path)
     except Exception:
         motion.rest()
         return False
@@ -178,7 +230,7 @@ def load_animation_with_beats(motion, aup, beats, path, musicpath):
             print str(errorMsg)
             print "This example is not allowed on this robot."
         motion.waitUntilMoveIsFinished()
-        #xaup.stopAll()
+        #aup.stopAll()
         print "finished"
         return True
 
@@ -195,7 +247,7 @@ def demo1(motion, path, aup, musicpath, beats):
 
     print "Start loading animation recorded..."
     try:
-        animation_lists, length = Frw.load_result(path)
+        animation_lists, length = Frw.load_result_demo(path)
     except Exception:
         motion.rest()
         return False
@@ -256,7 +308,7 @@ def demo2(motion, path, aup, musicpath, beats):
 
     print "Start loading animation recorded..."
     try:
-        animation_lists, length = Frw.load_result(path)
+        animation_lists, length = Frw.load_result_demo(path)
     except Exception:
         motion.rest()
         return False
@@ -278,12 +330,6 @@ def demo2(motion, path, aup, musicpath, beats):
             aup.post.playFile(musicpath)
             print(steptime)
             speedlist = [1, 1, 1,1, 1, 1, 1,1]
-            '''supportLeg = "LLeg"
-            duration = 3.0
-            motion.post.wbGoToBalance(supportLeg, duration)
-            supportLeg = "RLeg"
-            duration = 3.0
-            motion.wbGoToBalance(supportLeg, duration)'''
             motion.angleInterpolation(names, angles, times, isAbsolute)
             time.sleep(20)
             #motion.wbEnable(False)
@@ -312,15 +358,33 @@ def demo2(motion, path, aup, musicpath, beats):
         return True
 
 
-def step2(motion):
-    print("Step2")
+def step(motion,leglist, steplist):
+    speedlist = []
+    for line in leglist:
+        speedlist.append(1)
+
+    print("Start leg motion")
+    print(speedlist)
+    print(leglist)
+    print(type(leglist))
+    print(steplist)
+    print(type(steplist))
     motion.post.wbEnable(True)
-    motion.post.wbGoToBalance("LLeg", 5)
-    # motion.wbGoToBalance("Legs", 5)
-    motion.post.wbGoToBalance("LLeg", 6)
-    motion.post.wbGoToBalance("RLeg", 6)
-    motion.post.wbGoToBalance("Legs", 5)
-    motion.post.wbGoToBalance("Legs", 11)
+    try:
+        motion.post.setFootStepsWithSpeed(leglist, steplist, speedlist, False)
+    except Exception, errorMsg:
+        print str(errorMsg)
+        print "This example is not allowed on this robot."
+    print("Finish")
+
+
+def step3(motion):
+    print("Step3")
+    speedlist = [1, 1, 1, 1, 1, 1, 1, 1]
+    motion.wbEnable(True)
+    motion.setFootStepsWithSpeed(FS.footStepsLegList, FS.footStepsMoveList, speedlist, False)
+    motion.setFootStepsWithSpeed(FS.footStepsLegList, FS.footStepsMoveList, speedlist, False)
+
 
 def save_data(memory, data_list):
     """

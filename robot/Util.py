@@ -1,17 +1,30 @@
 from naoqi import ALProxy
-IP = "192.168.1.100"
-PORT = 9559
+import sqlite3
+
+conn = sqlite3.connect('C:/Users/zeyu/Desktop/NaoGUI/Database/animation.db')
+c = conn.cursor()
+c2 = conn.cursor()
+
+for row in c.execute("select * from robotinfo where id = 1"):
+    print row[0]
+    ip = str(row[1])
+    port = int(row[2])
+
+RobotIP = ip
+RobotPORT = port
+    #str(c.execute("select port from robotinfo where id = 1"))
+
+
 LOOP = 50
 PI = 3.1415926
-
-motion = ALProxy("ALMotion", IP, PORT)
-motion1 = ALProxy("ALMotion", IP, PORT)
-memory = ALProxy("ALMemory", IP, PORT)
-posture = ALProxy("ALRobotPosture", IP, PORT)
-aup = ALProxy("ALAudioPlayer", IP, PORT)
-aup1 = ALProxy("ALAudioPlayer", IP, PORT)
-tts = ALProxy("ALTextToSpeech", IP, PORT)
-print posture.getPostureList()
+motion = ALProxy("ALMotion", RobotIP, RobotPORT)
+motion1 = ALProxy("ALMotion", RobotIP, RobotPORT)
+stopmotion = ALProxy("ALMotion", RobotIP, RobotPORT)
+memory = ALProxy("ALMemory", RobotIP, RobotPORT)
+posture = ALProxy("ALRobotPosture", RobotIP, RobotPORT)
+aup = ALProxy("ALAudioPlayer", RobotIP, RobotPORT)
+aup1 = ALProxy("ALAudioPlayer", RobotIP, RobotPORT)
+tts = ALProxy("ALTextToSpeech", RobotIP, RobotPORT)
 
 # From CSV file to list
 def get_music(filepath):
@@ -22,13 +35,13 @@ def get_music(filepath):
     return time
 
 # File path of the beats
-beats = {
+'''beats = {
     "sugar": get_music("out.csv"),
 }
 # File path of the music
 music = {
     "sugar": "/home/nao/naoGUI/sugar.wav",
-}
+}'''''
 
 # File path to store the motion records
 PATH = "C:/Users/zeyu/Desktop/NaoGUI"
