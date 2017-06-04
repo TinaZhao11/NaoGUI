@@ -2,29 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="77e615f3-1ff1-4438-af69-04470bb3a16a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/image/connectBG.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Database/InitDatabase.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Database/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Database/getData.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Database/setfootstep.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Database/showData.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GUI/MainWindow.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GUI/connectRobot.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GUI/manageData.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/music_track/insertBeatList.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/Controller.py" afterPath="$PROJECT_DIR$/GUI/Controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/animation_view.py" afterPath="$PROJECT_DIR$/GUI/animation_view.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/audio_view.py" afterPath="$PROJECT_DIR$/GUI/audio_view.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/mainMenu.py" afterPath="$PROJECT_DIR$/GUI/mainMenu.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/suprise_view.py" afterPath="$PROJECT_DIR$/GUI/suprise_view.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/result.csv" afterPath="$PROJECT_DIR$/result.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/robot/FilesRW.py" afterPath="$PROJECT_DIR$/robot/FilesRW.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/robot/UpperBody.py" afterPath="$PROJECT_DIR$/robot/UpperBody.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/robot/Util.py" afterPath="$PROJECT_DIR$/robot/Util.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/robot/footstep.py" afterPath="$PROJECT_DIR$/robot/footstep.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simple.py" afterPath="$PROJECT_DIR$/simple.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stop.py" afterPath="$PROJECT_DIR$/stop.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -110,8 +88,8 @@
       <file leaf-file-name="Controller.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GUI/Controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+            <state relative-caret-position="219">
+              <caret line="92" column="106" lean-forward="true" selection-start-line="92" selection-start-column="106" selection-end-line="92" selection-end-column="106" />
               <folding>
                 <element signature="e#76#104#0" expanded="true" />
               </folding>
@@ -759,7 +737,14 @@
       <option name="project" value="LOCAL" />
       <updated>1495529045951</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Update at 4/6">
+      <created>1496580975009</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1496580975009</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView">
@@ -772,7 +757,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="23" width="1278" height="728" extended-state="0" />
+    <frame x="1" y="23" width="1278" height="728" extended-state="1" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25277337" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -834,7 +820,8 @@
     <MESSAGE value="Update at 20/5" />
     <MESSAGE value="Update at 22/5" />
     <MESSAGE value="Update at 23/5" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update at 23/5" />
+    <MESSAGE value="Update at 4/6" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update at 4/6" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1023,6 +1010,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="893">
           <caret line="49" column="0" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1030,6 +1018,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1037,6 +1026,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
           <caret line="22" column="32" lean-forward="false" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1044,6 +1034,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
           <caret line="98" column="36" lean-forward="false" selection-start-line="94" selection-start-column="7" selection-end-line="98" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1051,6 +1042,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
           <caret line="111" column="57" lean-forward="false" selection-start-line="111" selection-start-column="57" selection-end-line="111" selection-end-column="57" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1065,6 +1057,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="68" column="66" lean-forward="true" selection-start-line="66" selection-start-column="12" selection-end-line="68" selection-end-column="66" />
+          <folding>
+            <element signature="e#313#328#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1131,6 +1126,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
           <caret line="12" column="17" lean-forward="true" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+          <folding>
+            <marker date="1496502921015" expanded="true" signature="122:213" ph="create table... RobotInfo" />
+            <marker date="1496502921015" expanded="true" signature="122:215" ph="create table... RobotConnection" />
+            <marker date="1496502921015" expanded="true" signature="231:346" ph="create table... steplist" />
+            <marker date="1496502921015" expanded="true" signature="364:467" ph="create table... steplist" />
+            <marker date="1496502921015" expanded="true" signature="485:582" ph="create table... animation" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1146,6 +1148,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
           <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding>
+            <marker date="1496579168371" expanded="true" signature="167:233" ph="insert into steplist... " />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1153,6 +1158,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="15" column="0" lean-forward="true" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <marker date="1496504496429" expanded="true" signature="96:103" ph="SELECT * FRO... " />
+            <marker date="1496504496429" expanded="true" signature="96:138" ph="SELECT name sqlite_master" />
+            <marker date="1496504496429" expanded="true" signature="96:144" ph="SELECT * FRO... RobotConnection" />
+            <marker date="1496504496429" expanded="true" signature="96:145" ph="SELECT name sqlite_master" />
+            <marker date="1496504496429" expanded="true" signature="96:148" ph="SELECT name sqlite_master" />
+            <marker date="1496504496429" expanded="true" signature="190:204" ph="SELECT * FRO... robotinfo" />
+            <marker date="1496504496429" expanded="true" signature="190:213" ph="SELECT * FRO... musiclist" />
+            <marker date="1496504496429" expanded="true" signature="259:273" ph="SELECT * FRO... boxsteplist" />
+            <marker date="1496504496429" expanded="true" signature="259:282" ph="SELECT * FRO... animation" />
+            <marker date="1496504496429" expanded="true" signature="327:349" ph="SELECT * FRO... steplist" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1204,8 +1221,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GUI/Controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+        <state relative-caret-position="219">
+          <caret line="92" column="106" lean-forward="true" selection-start-line="92" selection-start-column="106" selection-end-line="92" selection-end-column="106" />
           <folding>
             <element signature="e#76#104#0" expanded="true" />
           </folding>
