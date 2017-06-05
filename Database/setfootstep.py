@@ -44,15 +44,6 @@ footStepsMoveList.append([0.0, 0.0, 0.0])
 footStepsMoveList.append([0.06, 0.0, 0.0])
 footStepsMoveList.append([0.0, 0.0, 0.0])
 
-id = 1
-for line in footStepsLegList:
-    c.execute("insert into boxsteplist values (%d,'','')"%(id))
-    id = id + 1
-
-for line in footStepsMoveList:
-    c.execute("insert into boxsteplist values (%d,'','')"%(id))
-    id = id + 1
-
 chaStepsLegList = []
 chaStepsMoveList = []
 chaStepsLegList.append("LLeg")
