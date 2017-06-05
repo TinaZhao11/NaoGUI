@@ -3,7 +3,6 @@ This file claims the ALMemory Keys used in the project.
 The keys store the torque of part of the sensors on the robot.
 """
 
-
 UPPERBODY_TORQUE_KEY = {
     # Head
     "HeadYaw": "Motion/Torque/Sensor/HeadYaw",

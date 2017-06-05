@@ -1,12 +1,15 @@
+'''This file is created by Kecheng Guo and modified by Zeyu Zhao
+This file contains all function module for recording process
+'''
+
 import time
 from GUI import manageData as mD
 
 from robot import ALMemoryKey, FilesRW as Frw, footstep as FS, Util as ul
 
-
-def record_animation_buttons(motion, memory, path, filename,name):
+# This function show the button mode recording
+def record_animation_buttons(motion, memory,name):
     print "operate the robot..."
-    csv_path = Frw.create_csv(path, filename)
     animation_list = []
     finished = False
     while 1:
@@ -17,7 +20,6 @@ def record_animation_buttons(motion, memory, path, filename,name):
             value = memory.getData(ALMemoryKey.UPPERBODY_TORQUE_KEY[joint])
             if value > ALMemoryKey.ALMEMORY_TORQUE_THRESHOLD[joint]:
                 motion.setStiffnesses(joint, 0)
-
         flag = {}
         for key in ALMemoryKey.HEAD_TACTIL_TOUCHED.keys():
             value = memory.getData(ALMemoryKey.HEAD_TACTIL_TOUCHED[key])
@@ -32,15 +34,12 @@ def record_animation_buttons(motion, memory, path, filename,name):
             motion.setStiffnesses('Body', 1)
     print "Finish recording..."
     print "saving data..."
-    Frw.save_result(animation_list, csv_path)
     result = str(animation_list)
     mD.save_record(name, result, len(animation_list))
-    return csv_path
 
-
-def record_animation1(motion, memory, path, filename,name):
+# This function show the free mode recording
+def record_animation1(motion, memory,name):
     print "operate the robot..."
-    csv_path = Frw.create_csv(path, filename)
     animation_list = []
     start = time.time()
     motion.setStiffnesses('Head', 0)
@@ -54,13 +53,11 @@ def record_animation1(motion, memory, path, filename,name):
         time.sleep(0.25)
     end = time.time()
     print "recording time: {} seconds.".format(end - start)
-    Frw.save_result(animation_list, csv_path)
     result = str(animation_list)
     print(type(name))
     mD.save_record(name, result, len(animation_list))
-    return csv_path
 
-
+# THis function show the torque mode recording
 def record_animation(motion, memory, path, loop, filename):
     """
     Record the motions of upper body for LOOP times
@@ -96,6 +93,7 @@ def record_animation(motion, memory, path, loop, filename):
     Frw.save_result(animation_list, csv_path)
     return csv_path
 
+# This function used to load the animation for the replaying process
 def load_animation(motion, animationlist):
     """
     Load animation from csv file
@@ -105,8 +103,6 @@ def load_animation(motion, animationlist):
     print "Start loading animation recorded..."
     try:
         animation_lists, length = Frw.load_result(animationlist)
-        #print animation_lists
-        #print type(animation_lists)
     except Exception:
         motion.rest()
         return False
@@ -145,6 +141,7 @@ def load_animation(motion, animationlist):
         return True
 
 
+# THis function used to load animation with music beat for replaying process
 def load_animation_with_beats(motion,animationList, musicList):
 
     print "Start loading animation records and music beats"
@@ -181,16 +178,16 @@ def load_animation_with_beats(motion,animationList, musicList):
             end = time.time()
             print "playing time: {} seconds.".format(end - start)
         except Exception,errorMsg:
-           # print "Nothing recorded!"
+            print "Nothing recorded!"
             print str(errorMsg)
             print "This example is not allowed on this robot."
         motion.post.waitUntilMoveIsFinished()
-        #xaup.stopAll()
         print "finished"
         return True
 
+# This function load animation for demos
+# The movement list and music list will get from the file from DemoFile
 def load_animation_for_demo(motion, aup, beats, path, musicpath):
-
     print "Start loading animation records and music beats"
     timeline = beats
     print("timeline")
@@ -223,22 +220,23 @@ def load_animation_for_demo(motion, aup, beats, path, musicpath):
             print len(times)
             aup.post.playFile(musicpath)
             motion.post.angleInterpolation(names, angles, times, isAbsolute)
+            time.sleep(18)
             end = time.time()
             print "playing time: {} seconds.".format(end - start)
         except Exception,errorMsg:
-           # print "Nothing recorded!"
+            print "Nothing recorded!"
             print str(errorMsg)
             print "This example is not allowed on this robot."
         motion.waitUntilMoveIsFinished()
-        #aup.stopAll()
+        aup.stopAll()
         print "finished"
         return True
 
+# This function used to show the demo1
 def demo1(motion, path, aup, musicpath, beats):
     timeline = beats
     timestep = []
     for l in range(4 * len(FS.footStepsLegList) + 1):
-        # print(l)
         if (4 * l <= len(timeline)):
             x = float(timeline[l * 4])
             timespot = round(x, 1)
@@ -266,22 +264,16 @@ def demo1(motion, path, aup, musicpath, beats):
             times.append(single_time)
         try:
             start = time.time()
-            #aup.post.playFile(musicpath)
             print(steptime)
             speedlist = [1, 1, 1,1, 1, 1, 1,1]
             motion.wbEnable(True)
             motion.post.angleInterpolation(names, angles, times, isAbsolute)
             motion.wbGoToBalance("LLeg", 5)
-            #motion.wbGoToBalance("Legs", 5)
             motion.wbGoToBalance("LLeg", 6)
             motion.wbGoToBalance("RLeg", 6)
             motion.wbGoToBalance("Legs", 5)
             motion.wbGoToBalance("Legs", 11)
             ul.posture.goToPosture("StandInit", 0.5)
-           # motion.setStiffnesses("Body", 1)
-           # motion.setFootStepsWithSpeed(FS.footStepsLegList, FS.footStepsMoveList, speedlist, False)
-            #time.sleep(2)
-            #motion.setFootStepsWithSpeed(FS.footStepsLegList, FS.footStepsMoveList, speedlist, False)
             print("is times")
             print(times)
             end = time.time()
@@ -294,75 +286,11 @@ def demo1(motion, path, aup, musicpath, beats):
         motion.rest()
         return True
 
-def demo2(motion, path, aup, musicpath, beats):
-    timeline = beats
-    timestep = []
-    motion.wbEnable(True)
-    for l in range(4 * len(FS.chaStepsLegList) + 1):
-        # print(l)
-        if (4 * l <= len(timeline)):
-            x = float(timeline[l * 4])
-            timespot = round(x, 1)
-            timestep.append(timespot)
-    steptime = timestep[:len(FS.chaStepsLegList)]
-
-    print "Start loading animation recorded..."
-    try:
-        animation_lists, length = Frw.load_result_demo(path)
-    except Exception:
-        motion.rest()
-        return False
-    else:
-        names = Frw.fieldnames
-        angles = []
-        times = []
-        single_time = []
-        for i in range(1, length+1):
-            t = round(0.5*i, 2)
-            single_time.append(t)
-        isAbsolute = True
-
-        for name in names:
-            angles.append(animation_lists[name])
-            times.append(single_time)
-        try:
-            start = time.time()
-            aup.post.playFile(musicpath)
-            print(steptime)
-            speedlist = [1, 1, 1,1, 1, 1, 1,1]
-            motion.angleInterpolation(names, angles, times, isAbsolute)
-            time.sleep(20)
-            #motion.wbEnable(False)
-            supportLeg = "LLeg"
-            duration = 3.0
-            motion.post.wbGoToBalance(supportLeg, duration)
-            motion.wbEnable(False)
-            motion.wbEnable(True)
-            supportLeg = "RLeg"
-            duration = 3.0
-            motion.wbGoToBalance(supportLeg, duration)
-            motion.wbEnable(False)
-            motion.setFootStepsWithSpeed(FS.chaStepsLegList, FS.chaStepsMoveList, speedlist, False)
-            time.sleep(2)
-            motion.setFootStepsWithSpeed(FS.chaStepsLegList, FS.chaStepsMoveList, speedlist, False)
-            print("is times")
-            print(times)
-            end = time.time()
-            print "playing time: {} seconds.".format(end - start)
-        except Exception :
-            print "Nothing recorded!"
-        print "finished"
-       # motion.waitUntilMoveIsFinished()
-        aup.stopAll()
-        motion.rest()
-        return True
-
-
+# THis function show the step movement
 def step(motion,leglist, steplist):
     speedlist = []
     for line in leglist:
         speedlist.append(1)
-
     print("Start leg motion")
     print(speedlist)
     print(leglist)
@@ -376,15 +304,6 @@ def step(motion,leglist, steplist):
         print str(errorMsg)
         print "This example is not allowed on this robot."
     print("Finish")
-
-
-def step3(motion):
-    print("Step3")
-    speedlist = [1, 1, 1, 1, 1, 1, 1, 1]
-    motion.wbEnable(True)
-    motion.setFootStepsWithSpeed(FS.footStepsLegList, FS.footStepsMoveList, speedlist, False)
-    motion.setFootStepsWithSpeed(FS.footStepsLegList, FS.footStepsMoveList, speedlist, False)
-
 
 def save_data(memory, data_list):
     """

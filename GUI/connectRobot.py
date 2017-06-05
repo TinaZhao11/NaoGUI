@@ -1,3 +1,10 @@
+'''This project is created by Zeyu Zhao
+This package contains all GUI design used for user interface
+
+This connectRobot is the connect view for the desktop application
+This file is used to connect the robot and enter the mainMenu is the robot is connected
+In the connection process, the robot IP and Port will updated to database for further use'''
+
 import sys
 from naoqi import ALProxy
 
@@ -6,6 +13,7 @@ from PyQt4.QtGui import QFont
 from PyQt4.QtCore import Qt
 import sqlite3
 
+# Connect to database and create cursor for database
 conn = sqlite3.connect('C:/Users/zeyu/Desktop/NaoGUI/Database/animation.db')
 c = conn.cursor()
 
@@ -87,7 +95,10 @@ class Connection(QtGui.QWidget):
         self.connect(self.enter_button, QtCore.SIGNAL('clicked()'),
                      self.showMainMenu)
 
-
+# This part will define the button event for connectRobot
+    # the check_Connect will try to connect the robot and verify the robot info
+    # if connected, let user to click enter mainMenu button
+    # if IP and Port is invalid, disable enter mainMenu button
     def check_Connect(self):
         IP = str(self.inputIP.toPlainText())
         PORT = int(self.inputPORT.toPlainText())
@@ -103,9 +114,8 @@ class Connection(QtGui.QWidget):
             self.invalidlabel.setText("")
             self.validlabel.setText("Connected! Click Enter MainMenu to Continue!")
             self.enter_button.setDisabled(False)
-
+    # If the robot IP and Port is valid, update this robot info to database
     def updateRobotInfo(self):
-        #c.execute("uodate robotinfo(id,ip,port) values (%d,'%s','%d')"%(1,RobotIP,RobotPORT))
         print(self.RobotIP)
         print(self.RobotPORT)
         c.execute("update robotinfo set ip='%s' where id = 1"%(self.RobotIP))
@@ -114,6 +124,7 @@ class Connection(QtGui.QWidget):
         for row in c.execute("SELECT * FROM robotinfo "):
             print row
 
+    # This function used to show mainMenu
     def showMainMenu(self):
         self.close()
         print("showMainMenu")

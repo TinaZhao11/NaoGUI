@@ -1,3 +1,6 @@
+'''This file contain the step design and evaluation
+In this file, the footstep will synchronized with music beat, meanwhile adding the upperbody motion
+This function is not applied to GUI because the balance issue need to be improved'''
 import argparse
 import sys
 import sqlite3
@@ -6,10 +9,10 @@ conn = sqlite3.connect('animation.db')
 c = conn.cursor()
 
 from naoqi import ALProxy
-
 from robot import FilesRW as Frw
 
-
+# Pre-setting two footstep, the footsteplist is box step
+# THe chasteplist is the cha cha step
 footStepsList = []
 footStepsLegList = []
 footStepsMoveList = []
@@ -89,40 +92,40 @@ chaStepsMoveList.append([0.00, -0.16, 0.0])
 
 
 def chachastep_main(robotIP, PORT=9559):
-    print(footStepsLegList)
-    print(footStepsMoveList)
     motion  = ALProxy("ALMotion", robotIP, PORT)
     postureProxy = ALProxy("ALRobotPosture", robotIP, PORT)
-    aup = ALProxy("ALAudioPlayer", "192.168.1.100", 9559)
-    tts = ALProxy("ALTextToSpeech", "192.168.1.100", 9559)
+    aup = ALProxy("ALAudioPlayer", robotIP, PORT)
 
+    leg = chaStepsLegList
+    step =  chaStepsMoveList
     # Wake up robot
     motion.moveInit()
-    #aup.playFile("/home/nao/naoGUI/moonlight.wav", 0.9, -1.0)
     motion.wakeUp()
 
     # Send robot to Stand Init
     postureProxy.goToPosture("StandInit", 0.8)
 
-    timeline = get_music("C:/Users/zeyu/Desktop/NaoGUI/out.csv")
+    timeline = get_music("C:/Users/zeyu/Desktop/NaoGUI/DemoFile/trouble.csv")
     time = []
     print("timeline")
     print(timeline)
     print("footstepLists")
     print(len(footStepsList))
+
+    # This part generate the timeline according to the steplist
+    # The timeline should has same length of steplist
     for l in range( 4*len(footStepsLegList) +1):
-        #print(l)
         if(4*l <= len(timeline)):
             x = float(timeline[l*4])
             timespot = round(x, 1)
             time.append(timespot)
     steptime = time[:len(footStepsLegList)]
 
-    print("steptime")
-    print(steptime)
+    # This part load the animation for upperbody
     try:
-        animation_lists, length = Frw.load_result("C:/Users/zeyu/Desktop/NaoGUI/result.csv")
-    except Exception:
+        animation_lists, length = Frw.load_result_demo("C:/Users/zeyu/Desktop/NaoGUI/DemoFile/result1.csv")
+    except Exception,errorMsg:
+        print errorMsg
         motion.rest()
         return False
     else:
@@ -137,12 +140,9 @@ def chachastep_main(robotIP, PORT=9559):
         for name in names:
             angles.append(animation_lists[name])
             times.append(single_time)
-
+        # THis part play the music and show step and animation
         try:
-            print("footStepsList")
-            print(footStepsLegList)
-            print(footStepsMoveList)
-            aup.post.playFile("/home/nao/naoGUI/sugar.wav")
+            aup.post.playFile("/home/nao/naoGUI/trouble.wav")
             motion.post.setFootSteps(footStepsLegList,footStepsMoveList,steptime, True)
             motion.angleInterpolation(names, angles, times, isAbsolute)
         except Exception, errorMsg:
@@ -151,13 +151,9 @@ def chachastep_main(robotIP, PORT=9559):
             motion.rest()
             exit()
 
-
         motion.waitUntilMoveIsFinished()
-
-        # Go to rest position
         aup.stopAll()
         motion.rest()
-        sys.exit(1)
 
 def get_music(filepath):
     fo = open(filepath, "r")
@@ -168,19 +164,17 @@ def get_music(filepath):
 
 # File path of the beats
 beats = {
-    "sugar": get_music("C:/Users/zeyu/Desktop/NaoGUI/out.csv"),
+    "sugar": get_music("C:/Users/zeyu/Desktop/NaoGUI/DemoFile/trouble.csv"),
 }
 # File path of the music
 music = {
-    "sugar": "/home/nao/naoGUI/sugar.wav",
+    "sugar": "/home/nao/naoGUI/trouble.wav",
 }
 
-# File path to store the motion records
-#PATH = "C:/Users/gkcsj/Desktop"
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ip", type=str, default="192.168.1.100",
+    parser.add_argument("--ip", type=str, default="192.168.1.102",
                         help="Robot ip address")
     parser.add_argument("--port", type=int, default=9559,
                         help="Robot port number")

@@ -35,7 +35,7 @@ def create_csv(path, filename):
 
 def load_result_demo(path):
     """
-    Load results from CSV file.
+    Load results from CSV file for demo.
     """
     results = {}
     results["RShoulderRoll"] = []
@@ -67,7 +67,7 @@ def load_result_demo(path):
 
 def load_result(list):
     """
-    Load results from CSV file.
+    Load results from Database.
     """
     results1 = {}
 
@@ -95,7 +95,5 @@ def load_result(list):
         length += 1
         for fieldname in fieldnames:
             results1[fieldname].append(float(line[fieldname]))
-
-
     return results1, length
 

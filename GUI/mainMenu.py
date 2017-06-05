@@ -1,9 +1,10 @@
-'''This GUI project is created by Zeyu Zhao
-This mainMenu is a part of GUI  project, aim to show the GUI'''
+'''This project is created by Zeyu Zhao
+This package contains all GUI design used for user interface
 
-#!/usr/bin/python
+This mainMenu is the main menu view for the desktop application
+This file will open the mainMenu and connect to subview of the GUI Part'''
 
-# Draw the mainMenu for the Naopy App
+
 import sys
 
 from PyQt4 import QtGui
@@ -13,7 +14,7 @@ from GUI import animation_view
 from GUI import audio_view
 from GUI import suprise_view
 
-
+# Draw the mainMenu for the Naopy App
 class MainMenu(QtGui.QWidget):
     def __init__(self):
         super(MainMenu, self).__init__()
@@ -23,7 +24,7 @@ class MainMenu(QtGui.QWidget):
         self.Suprise = suprise_view.Suprise_View()
 
     def setMainWindow(self):
-        #Draw the main windows
+        #Draw layout for the main windows,like window size, buttons
         self.resize(1000, 600)
         self.setWindowTitle('Naopy')
         self.setWindowIcon(QtGui.QIcon('C:/Users/zeyu/Desktop/NaoGUI/image/Icon.png'))
@@ -61,29 +62,20 @@ class MainMenu(QtGui.QWidget):
         self.button4.clicked.connect(self.button4_clicked)
         self.button2.clicked.connect(self.button2_clicked)
         self.button3.clicked.connect(self.button3_clicked)
-    # Set the window into Center
 
+# This part will define the button event for mainMenu
     def button1_clicked(self):
-        # self.hide()
-        # Form1 = QtGui.QDialog()
         self.Animation.show()
         print("button1_clicked")
 
     def button2_clicked(self):
-        # self.hide()
-        # Form1 = QtGui.QDialog()
         self.Audio.show()
         print("button2_clicked")
 
     def button3_clicked(self):
-        # self.hide()
-        # Form1 = QtGui.QDialog()
         self.Suprise.show()
         print("button3_clicked")
 
     def button4_clicked(self):
-        # self.hide()
-        # Form1 = QtGui.QDialog()
-        # self.hide()
         self.close()
         print("button4_clicked")

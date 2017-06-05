@@ -1,11 +1,12 @@
+'''This project is created by Zeyu Zhao
+This package contains all GUI design used for user interface
+
+This MainWindow is the main entrance to open the GUI
+This file will open the connectRobot view and start the GUI part'''
+
 import connectRobot as CR
 import sys
-from naoqi import ALProxy
-
 from PyQt4 import QtGui,QtCore
-from PyQt4.QtGui import QFont
-from PyQt4.QtCore import Qt
-import sqlite3
 
 app = QtGui.QApplication(sys.argv)
 connect = CR.Connection()

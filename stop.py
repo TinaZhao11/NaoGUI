@@ -1,3 +1,4 @@
+# Used to stop all motion
 from naoqi import ALProxy
 import math
 

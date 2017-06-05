@@ -1,6 +1,11 @@
+'''This project is created by Zeyu Zhao
+This package contains all GUI design used for user interface
+
+This surpise_view is the sub view of the desktop application
+This file will open the surprise view of the GUI Part'''
+
 from PyQt4 import QtGui, QtCore
 from PyQt4.QtGui import QFont
-from naoqi import ALProxy
 
 import Controller as con
 from robot import Util as ul
@@ -8,6 +13,7 @@ from robot import Util as ul
 IP = ul.RobotIP
 PORT = ul.RobotPORT
 
+# Set the surprise view layout
 class Suprise_View(QtGui.QWidget):
     def __init__(self, parent=None):
         super(Suprise_View, self).__init__(parent)
@@ -15,6 +21,7 @@ class Suprise_View(QtGui.QWidget):
         self.volSlider = QtGui.QSlider()
 
     def initUI(self):
+    # Draw the windows and components
         self.resize(1000, 600)
         self.setWindowTitle('Surprise Demo')
         self.setWindowIcon(QtGui.QIcon('C:/Users/zeyu/Desktop/NaoGUI/image/Icon.png'))
@@ -55,7 +62,8 @@ class Suprise_View(QtGui.QWidget):
         MR_button.move(900, 20)
         MR_button.setFont(QFont("Consolas", 14))
 
-
+    # Set the connection events for buttons
+    # The event will call the function in Controller
         self.connect(BM_button, QtCore.SIGNAL('clicked()'),
                      self.BM_ButtonClicked)
         self.connect(MR_button, QtCore.SIGNAL('clicked()'),
@@ -66,5 +74,6 @@ class Suprise_View(QtGui.QWidget):
         self.connect(RM_button, QtCore.SIGNAL('clicked()'),
                      con.demo2)
 
+# This function used to back the mainMenu
     def BM_ButtonClicked(self):
         self.close()

@@ -1,3 +1,4 @@
+'''This file set the parameter for the application'''
 from naoqi import ALProxy
 import sqlite3
 
@@ -12,7 +13,6 @@ for row in c.execute("select * from robotinfo where id = 1"):
 
 RobotIP = ip
 RobotPORT = port
-    #str(c.execute("select port from robotinfo where id = 1"))
 
 
 LOOP = 50
@@ -34,14 +34,6 @@ def get_music(filepath):
         time.append(float(line))
     return time
 
-# File path of the beats
-'''beats = {
-    "sugar": get_music("out.csv"),
-}
-# File path of the music
-music = {
-    "sugar": "/home/nao/naoGUI/sugar.wav",
-}'''''
 
 # File path to store the motion records
 PATH = "C:/Users/zeyu/Desktop/NaoGUI"

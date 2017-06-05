@@ -1,3 +1,10 @@
+'''This project is created by Zeyu Zhao
+This package contains all GUI design used for user interface
+
+This animation_view show the animation module for the desktop application
+This view contains the key function module of the system,
+including recording, replaying, standard motion'''
+
 from PyQt4 import QtGui, QtCore
 from PyQt4.QtGui import QFont
 from naoqi import ALProxy
@@ -38,10 +45,11 @@ class Animation_View(QtGui.QWidget):
         self.volSlider = QtGui.QSlider()
         self.animationList = QtGui.QComboBox()
         self.animationList1 = QtGui.QComboBox()
+        self.recordList = QtGui.QComboBox()
 
-
-
+    # Draw the animation view for the GUI
     def initUI(self):
+        # Set window size with background and Icon
         self.resize(1000, 600)
         self.setWindowTitle('Animation')
         self.setWindowIcon(QtGui.QIcon('C:/Users/zeyu/Desktop/NaoGUI/image/Icon.png'))
@@ -53,6 +61,7 @@ class Animation_View(QtGui.QWidget):
         self.setPalette(animationBG)
         self.setAutoFillBackground(True)
 
+        # Draw view compoments like label, button, slider, and set their format
         volume_label = QtGui.QLabel(self)
         volume_label.setPixmap(QtGui.QPixmap('C:/Users/zeyu/Desktop/NaoGUI/image/volume.png'))
         volume_label.move(70, 50)
@@ -97,7 +106,7 @@ class Animation_View(QtGui.QWidget):
         S0_button.move(700, 20)
         S0_button.setFont(QFont("Consolas", 14))
 
-
+        # Set connect event for button in the view
         self.connect(SM_button, QtCore.SIGNAL('clicked()'),
                      self.set_SM_view)
 
@@ -118,7 +127,8 @@ class Animation_View(QtGui.QWidget):
         self.connect(S0_button, QtCore.SIGNAL('clicked()'),
                      con.s0)
 
-
+    # This part draw the Standard Motion view for animation
+    # Include Standard Posture and Walk Navigation
     def set_SM_view(self):
         print(" set_SM_view:")
         self.tabWidget2.close()
@@ -127,6 +137,7 @@ class Animation_View(QtGui.QWidget):
         self.tabWidget1 = QtGui.QTabWidget(self)
         self.tabWidget1.setGeometry(QtCore.QRect(420, 100, 480, 400))
 
+        # Tab1 contains the function module for standard motion
         tab1 = QtGui.QWidget()
 
         stand_button = QtGui.QPushButton("Stand", tab1)
@@ -165,9 +176,7 @@ class Animation_View(QtGui.QWidget):
         self.connect(lyingBelly_button, QtCore.SIGNAL('clicked()'),
                      con.lyback_motion)
 
-       # self.connect(rest_button, QtCore.SIGNAL('clicked()'),
-        #             con.rest_motion())
-
+        # Tab2 contains walk navigation for robot
         tab2 = QtGui.QWidget(self)
 
         horizontal_walk_label = QtGui.QLabel("Horizontal", tab2)
@@ -201,13 +210,10 @@ class Animation_View(QtGui.QWidget):
         self.lcd2.move(180, 10)
         vSlider.valueChanged.connect(self.lcd2.display)
 
-
         self.lcd3 = QtGui.QLCDNumber(tab2)
         self.lcd3.resize(100, 50)
         self.lcd3.move(310, 10)
         rSlider.valueChanged.connect(self.lcd3.display)
-
-
 
         walk_button = QtGui.QPushButton("Walk", tab2)
         walk_button.move(310, 280)
@@ -215,21 +221,24 @@ class Animation_View(QtGui.QWidget):
         self.connect(walk_button, QtCore.SIGNAL('clicked()'),
                      self.get_walk_value)
 
-
         self.tabWidget1.addTab(tab1,"Whole Body Motion")
         self.tabWidget1.addTab(tab2,"Walking Motion")
         self.tabWidget1.setFont(QFont("Consolas", 16))
-
         self.tabWidget1.show()
 
+# This part draw the Recording Module view for animation
+# Include Free Mode and Button Mode
     def set_RM_view(self):
         self.tabWidget1.close()
         self.tabWidget3.close()
         self.tabWidget2 = QtGui.QTabWidget(self)
         self.tabWidget2.setGeometry(QtCore.QRect(420, 100, 480, 400))
+    # The tab1 contains the free mode and tab2 contains button mode1
         tab1 = QtGui.QWidget()
         tab2 = QtGui.QWidget()
 
+    # This part design the record module layout
+    # Include components like button, input wiedgts and combobox
         self.tabWidget2.addTab(tab1, "Free Mode")
         self.tabWidget2.addTab(tab2, "Button Mode")
         self.tabWidget2.setFont(QFont("Consolas", 16))
@@ -327,6 +336,7 @@ class Animation_View(QtGui.QWidget):
         self.con_record_button.setDisabled(True)
         self.click_record_button.setDisabled(True)
 
+    # This part define the connect event for buttons in recording module view
         self.connect(self.con_record_button, QtCore.SIGNAL('clicked()'),
                      self.Con_Record_Clicked)
         self.connect(self.click_record_button, QtCore.SIGNAL('clicked()'),
@@ -340,6 +350,8 @@ class Animation_View(QtGui.QWidget):
         self.connect(check_button1, QtCore.SIGNAL('clicked()'),
                      self.check_name1)
 
+# This part draw the Replaying Module view for animation
+# Include three combobox for user to choose record, music and step
     def set_RPM_view(self):
         print(" set_RPM_view:")
         self.tabWidget2.close()
@@ -356,11 +368,11 @@ class Animation_View(QtGui.QWidget):
         self.recrodlabel = QtGui.QLabel("RecordList", tab1)
         self.recrodlabel.setFont(QFont("Consolas", 16))
         self.recrodlabel.move(10, 20)
-        self.animationList = QtGui.QComboBox(tab1)
-        self.animationList.insertItem(0, "RecordList")
-        self.animationList.insertItem(1, "None")
-        self.animationList.resize(300, 40)
-        self.animationList.move(150, 15)
+        self.recordList = QtGui.QComboBox(tab1)
+        self.recordList.insertItem(0, "RecordList")
+        self.recordList.insertItem(1, "None")
+        self.recordList.resize(300, 40)
+        self.recordList.move(150, 15)
 
         self.musiclabel = QtGui.QLabel("MusicList", tab1)
         self.musiclabel.setFont(QFont("Consolas", 16))
@@ -392,85 +404,89 @@ class Animation_View(QtGui.QWidget):
         self.connect(replay_button, QtCore.SIGNAL('clicked()'),
                      self.replay_clicked)
 
+# This function used to get data for walk navigation
+# And start the walk motion for robot
     def get_walk_value(self):
         con.x = self.lcd1.value()
         con.y = self.lcd2.value()
         con.r = self.lcd3.value()
         con.walk_motion(con.x, con.y, con.r)
 
-
+# This function used to start recording for free mode
+# Before start the recording, check if the valid name is provided
+# Start record with valid name and show the animation list
     def Con_Record_Clicked(self):
-        print("Con_Record_Clicked")
-        print(self.inputName.toPlainText())
-        #print(mD.check_record_name(self.inputName.toPlainText()))
+        print("Start Recording with Free Mode")
         if(mD.check_record_name(self.inputName.toPlainText()) == True):
             con.con_record(self.inputName.toPlainText())
         self.set_animationList()
 
+# This function used to start recording for button mode
+# Before start the recording, check if the valid name is provided
+# Start record with valid name and show the animation list
     def Click_Record_Clicked(self):
-        print("Con_Record_Clicked")
-        print(self.inputName1.toPlainText())
-        #print(mD.check_record_name(self.inputName.toPlainText()))
+        print("Start Recording with Button Mode")
         if(mD.check_record_name(self.inputName1.toPlainText()) == True):
             con.click_record(self.inputName1.toPlainText())
         self.set_animationList()
 
+# This function used to delete record from the recordlist for free mode
+# The delete will be updated to the database
     def delete_animation(self):
         listname = str(self.animationList.currentText())
         index = self.animationList.currentIndex()
         mD.delete_record(listname)
-        print("listname")
-        print listname
         self.animationList.removeItem(index)
 
+# This function used to delete record from the recordlist for button mode
+# The delete will be updated to the database
     def delete_animation1(self):
         listname = str(self.animationList1.currentText())
         index = self.animationList1.currentIndex()
         mD.delete_record(listname)
-        print("listname")
-        print listname
         self.animationList1.removeItem(index)
 
+# This function used to get recordlist and show them in recording view
     def set_animationList(self):
         index = 2
         nameList = mD.sendNameList()
-        print(nameList)
+        #print(nameList)
         for line in nameList:
             self.animationList.insertItem(index, line)
             self.animationList1.insertItem(index, line)
             index = index + 1
 
+# This function used to get recordlist and show them in replaying view
     def set_recordList(self):
         index = 2
         nameList = mD.sendNameList()
-        lengthlist = mD.sendRecordLengthList()
-        print(nameList)
+        #print(nameList)
         for line in nameList:
             insert = line
-            self.animationList.insertItem(index, insert)
+            self.recordList.insertItem(index, insert)
             index = index + 1
 
+# This function used to get musiclist and show them in replaying view
     def set_musicList(self):
         index = 2
         nameList = mD.sendMusicList()
-        lengthlist = mD.sendMusicLengthList()
         print(nameList)
         for line in nameList:
             insert = line
             self.musicList.insertItem(index, insert)
             index = index + 1
 
+# This function used to get steplist and show them in replaying view
     def set_stepList(self):
         index = 2
         nameList = mD.sendStepList()
-        lengthlist = mD.sendStepLengthList()
         print(nameList)
         for line in nameList:
             insert = line
             self.stepList.insertItem(index, insert)
             index = index + 1
 
-
+# This function used to verify the name for free mode input
     def check_name(self):
         print"Checkname"
         if (mD.check_record_name(self.inputName.toPlainText())):
@@ -482,6 +498,7 @@ class Animation_View(QtGui.QWidget):
             self.validlabel.setText("")
             self.invalidlabel.setText("Name Already Exist!")
 
+# This function used to verify the name for button mode input
     def check_name1(self):
         print"Checkname"
         if (mD.check_record_name(self.inputName1.toPlainText())):
@@ -493,24 +510,30 @@ class Animation_View(QtGui.QWidget):
             self.validlabel1.setText("")
             self.invalidlabel1.setText("Name Already Exist!")
 
-
+# This fucntion used to replay animation design
+# Users can choose record, music, step from the list
+# The replaying will show a matching result
     def replay_clicked(self):
-        print("Volume")
-        print(Animation_View.volSlider.value())
         volume = Animation_View.volSlider.value()
-        animation = self.animationList.currentText()
+        animation = self.recordList.currentText()
         music = self.musicList.currentText()
         step = self.stepList.currentText()
-        print(animation)
-        print(music)
-        print(step)
-        con.replay(music, step, animation, volume)
+        if animation == "RecordList":
+            animation = "None"
+        if music == "MusicList":
+            music = "None"
+        if step == "StepList":
+            step = "None"
+        con.replay(music, step, animation)
 
+# This button used to back to mainMenu
     def BM_ButtonClicked(self):
         self.tabWidget1.close()
         self.tabWidget2.close()
         self.close()
 
+# This main function used to open the animation_view from the system code end
+# The developer can modify the function module of animation_view
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     connect = Animation_View()
