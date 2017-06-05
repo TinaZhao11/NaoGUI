@@ -1,52 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="77e615f3-1ff1-4438-af69-04470bb3a16a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Database/example.db" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Database/showData.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/GUI/animation.db" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Rest.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/another_step.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/arm1.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/arm2.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dance.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/loadmusic.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/mainGUI.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/music_track/animation.db" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/result.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/robot/chachastep.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/robot/main.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simple.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/simpletestview.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/trouble1.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/wholebodydance.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/withwb.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/demo1.csv" afterPath="$PROJECT_DIR$/DemoFile/demo1.csv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/music_track/moon.csv" afterPath="$PROJECT_DIR$/DemoFile/moon.csv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/music_track/sky.csv" afterPath="$PROJECT_DIR$/DemoFile/sky.csv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/out.csv" afterPath="$PROJECT_DIR$/DemoFile/trouble.csv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/result1.csv" afterPath="$PROJECT_DIR$/DemoFile/result1.csv" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/result2.csv" afterPath="$PROJECT_DIR$/DemoFile/result2.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Database/animation.db" afterPath="$PROJECT_DIR$/Database/animation.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Database/InitDatabase.py" afterPath="$PROJECT_DIR$/Database/InitDatabase.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Database/getData.py" afterPath="$PROJECT_DIR$/Database/getData.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Database/setfootstep.py" afterPath="$PROJECT_DIR$/Database/setfootstep.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/Controller.py" afterPath="$PROJECT_DIR$/GUI/Controller.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/MainWindow.py" afterPath="$PROJECT_DIR$/GUI/MainWindow.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/animation_view.py" afterPath="$PROJECT_DIR$/GUI/animation_view.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/audio_view.py" afterPath="$PROJECT_DIR$/GUI/audio_view.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/connectRobot.py" afterPath="$PROJECT_DIR$/GUI/connectRobot.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/mainMenu.py" afterPath="$PROJECT_DIR$/GUI/mainMenu.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/manageData.py" afterPath="$PROJECT_DIR$/GUI/manageData.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUI/suprise_view.py" afterPath="$PROJECT_DIR$/GUI/suprise_view.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/robot/ALMemoryKey.py" afterPath="$PROJECT_DIR$/robot/ALMemoryKey.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/robot/FilesRW.py" afterPath="$PROJECT_DIR$/robot/FilesRW.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/robot/UpperBody.py" afterPath="$PROJECT_DIR$/robot/UpperBody.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/robot/Util.py" afterPath="$PROJECT_DIR$/robot/Util.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/robot/footstep.py" afterPath="$PROJECT_DIR$/robot/footstep.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stop.py" afterPath="$PROJECT_DIR$/stop.py" />
-    </list>
+    <list default="true" id="77e615f3-1ff1-4438-af69-04470bb3a16a" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,42 +48,7 @@
     <favorites_list name="NaoGUI" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="UpperBody.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/robot/UpperBody.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="222" column="25" lean-forward="false" selection-start-line="222" selection-start-column="25" selection-end-line="222" selection-end-column="25" />
-              <folding>
-                <element signature="e#131#142#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Controller.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GUI/Controller.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="109" column="128" lean-forward="false" selection-start-line="109" selection-start-column="128" selection-end-line="109" selection-end-column="128" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="stop.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stop.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-              <folding>
-                <element signature="e#26#51#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -665,7 +585,14 @@
       <option name="project" value="LOCAL" />
       <updated>1496580975009</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Update at 5/6 Final Version">
+      <created>1496655067111</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1496655067111</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -678,7 +605,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1296" height="776" extended-state="6" />
+    <frame x="-8" y="-8" width="1296" height="776" extended-state="7" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -741,7 +668,8 @@
     <MESSAGE value="Update at 22/5" />
     <MESSAGE value="Update at 23/5" />
     <MESSAGE value="Update at 4/6" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update at 4/6" />
+    <MESSAGE value="Update at 5/6 Final Version" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update at 5/6 Final Version" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1057,12 +985,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stop.py">
+    <entry file="file://$PROJECT_DIR$/robot/UpperBody.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        <state relative-caret-position="162">
+          <caret line="222" column="25" lean-forward="false" selection-start-line="222" selection-start-column="25" selection-end-line="222" selection-end-column="25" />
           <folding>
-            <element signature="e#26#51#0" expanded="true" />
+            <element signature="e#131#142#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1075,12 +1003,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/robot/UpperBody.py">
+    <entry file="file://$PROJECT_DIR$/stop.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="222" column="25" lean-forward="false" selection-start-line="222" selection-start-column="25" selection-end-line="222" selection-end-column="25" />
+        <state relative-caret-position="81">
+          <caret line="4" column="20" lean-forward="true" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
           <folding>
-            <element signature="e#131#142#0" expanded="true" />
+            <element signature="e#26#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
